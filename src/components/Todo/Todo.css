@@ -1,0 +1,30 @@
+/* reactstrap */
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.list-group-item:first-child {
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+}
+/* todo */
+.todo.completed * {
+    color: rgb(213, 213, 213);
+    transition: color .2s;
+}
+.todo-title.list-group-item-heading{
+    margin-bottom: 0;
+    /* width: 80%; */
+}
+.todo.completed .todo-title {
+    text-decoration: line-through;
+}
+.todo-left-side {
+    align-items: center;
+    display: flex;
+}
+.todo-right-side {
+    display: flex;
+    flex-wrap: wrap-reverse;
+}

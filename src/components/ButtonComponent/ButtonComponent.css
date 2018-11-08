@@ -1,0 +1,8 @@
+/* buttons */
+.checkbox {
+    margin-right: 0.5rem;
+}
+.btn.btn-light {
+    background-color: inherit;
+    border-color: transparent;
+}
