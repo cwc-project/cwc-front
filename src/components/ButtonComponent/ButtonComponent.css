@@ -1,8 +1,12 @@
 /* buttons */
-.checkbox {
+.checkbox-btn, 
+.delete-btn {
     margin-right: 0.5rem;
 }
-.btn.btn-light {
-    background-color: inherit;
+.save-btn {
+    margin-left: 0.5rem;
+}
+.btn-light {
+    background-color: transparent;
     border-color: transparent;
 }

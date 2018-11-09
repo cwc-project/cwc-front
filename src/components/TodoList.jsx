@@ -1,21 +1,29 @@
 import React from 'react';
-import { ListGroup } from 'reactstrap';
+import { ListGroup, } from 'reactstrap';
+import PropTypes from 'prop-types';
 
-import Todo from 'containers/TodoContainer';
+import TodoContainer from 'containers/TodoContainer';
 
-import * as Icon from 'react-feather';
+export default function TodoList(props) {
+    const { todos: { todos, fetching }, onDelete } = props;
+    
+    return (          
+        <ListGroup>     
+            { !fetching && todos.length ?
+                todos.map((todo, idx) => 
+                    <TodoContainer 
+                        key={todo.id} 
+                        {...todo}
+                        onDelete={onDelete}
+                    /> 
+                )
+                :
+                '...loading'
+            }
+        </ListGroup>   
+    );
+};
 
-export default function TodoList() {
-    // const { Calendar } = Icon;
-    // const camera = <Icon.Camera />
-    return (
-        <ListGroup>
-            {/* <ListGroupItem><Trash2 /><Square /><div>dasffffffffffffffffffffffffffffffffffffffffffdasfds</div><Clock /><Edit2 /></ListGroupItem>
-            <ListGroupItem><Trash2 /><CheckSquare />Создать Дизайн для MVP 0 <Clock /><Edit2 /></ListGroupItem> */}
-            <Todo />
-            {/* <ListGroupItem><ListGroupItemText>Second Task</ListGroupItemText></ListGroupItem> */}
-            {/* <ListGroupItem><IconBtn icon={Calendar} />Создать Дизайн для MVP 0</ListGroupItem> */}
-            {/* <ListGroupItem>Создать Дизайн для MVP 0</ListGroupItem> */}
-        </ListGroup>
-    )
+TodoList.propTypes = {
+    todos: PropTypes.object.isRequired,
 };

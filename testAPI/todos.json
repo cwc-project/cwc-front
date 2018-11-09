@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "Дизайн",
+        "completed": false
+    },
+    {
+        "id": 2,
+        "title": "Адаптация под мобильные устройства",
+        "completed": false
+    },
+    {
+        "id": 3,
+        "title": "Добавление необходимых ф-ции",
+        "completed": false
+    }
+]

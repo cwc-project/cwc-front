@@ -1,29 +1,66 @@
 import React, { PureComponent } from 'react';
 
 import Todo from 'components/Todo';
+import TodoEdit from 'components/TodoEdit';
 
-class TodoContainer extends PureComponent {
+export default class TodoContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             completed: false,
+            editing: false,
         };
-    }
-    
+    }   
+
     handleCheck = () => {
         this.setState({ completed: !this.state.completed, })
     }
 
-    render() {
-        const{ completed } = this.state;
+    handleEdit = () => {
+        this.setState({ editing: true, })
+    }
 
-        return(
+    handleDelete = (event) => {
+        event.preventDefault();
+        const { id, onDelete } = this.props;
+        onDelete(id);
+        // console.log(this.props)
+    }
+
+    handleSave = (event) => {
+        event.preventDefault();
+        console.log('changed');
+        this.setState({ editing: false, });
+    }
+
+    renderDisplayTodo() {
+        const { completed } = this.state;
+        const { title } = this.props;
+        return (
             <Todo 
+                title={title}
                 completed={completed}
                 onCheck={this.handleCheck}
+                onEdit={this.handleEdit}
             />
         );
     }
-};
 
-export default TodoContainer;
+    renderEditTodo() {
+        const { title } = this.props;
+        return(
+           <TodoEdit 
+                title={title} 
+                onDelete={this.handleDelete}
+                onSave={this.handleSave}
+            />
+        );
+    }
+
+    render() {
+        const { completed, editing } = this.state;
+        const { title } = this.props;
+
+        return editing ? this.renderEditTodo() :  this.renderDisplayTodo();              
+    }
+};

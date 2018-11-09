@@ -11,7 +11,7 @@ import ButtonComponent from 'components/ButtonComponent';
 
 
 export default function Todo(props) {    
-    const { completed, onCheck } = props;
+    const { completed, onCheck, onEdit, title } = props;
     const todoCheck = classNames( 'todo',
         completed ? 'completed' : 'uncompleted'
     );
@@ -20,17 +20,18 @@ export default function Todo(props) {
         <ListGroupItem className={todoCheck}>
             <div className="todo-left-side">
                 <ButtonComponent 
-                    className="checkbox"
+                    className="checkbox-btn"
                     icon={completed ? <CheckSquare /> : <Square />}
                     onClick={onCheck}            
                 />
-                <ListGroupItemHeading className="todo-title">Доделать дизайн, добавить шапку проекта, загружать todo через API</ListGroupItemHeading>                
+                <ListGroupItemHeading className="todo-title">{title}</ListGroupItemHeading>                
             </div>
             <div className="todo-right-side">
                 <Timer />
                 <ButtonComponent 
                     className="edit"
-                    icon={<Edit2 />}          
+                    icon={<Edit2 />}  
+                    onClick={onEdit}        
                 />   
             </div>
         </ListGroupItem>

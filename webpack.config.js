@@ -19,7 +19,7 @@ const development = options.mode === 'development';
               components: path.resolve(__dirname, 'src', 'components'),
               containers: path.resolve(__dirname, 'src', 'containers'),
               reducers: path.resolve(__dirname, 'src', 'reducers'),
-              action: path.resolve(__dirname, 'src', 'actions'),
+              actions: path.resolve(__dirname, 'src', 'actions'),
               middleware: path.resolve(__dirname, 'src', 'middleware'),
             },
         },
@@ -28,7 +28,8 @@ const development = options.mode === 'development';
             overlay: true,
             stats: 'errors-only',
             compress: true,
-        },
+            historyApiFallback: true,           
+        },     
         devtool: development ? 'eval-source-map' : false,
         module: {
             rules: [
