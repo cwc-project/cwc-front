@@ -20,7 +20,8 @@ export default function TodoEdit(props) {
                 <Input 
                     className="title-edit-input"
                     type="text" 
-                    defaultValue={title} 
+                    defaultValue={title}  
+                    id='titleInput'       
                     autoFocus
                  />
                 <ButtonComponent 

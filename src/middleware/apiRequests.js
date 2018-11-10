@@ -15,11 +15,20 @@ const apiRequests = apiUrl => store => next => action => {
     };
 
     next({ type: REQUEST }); 
+    
     return axios[action.request.method](`${apiUrl}${action.request.url}`, action.request.body)
-    .then(({ data }) => next({
-        type: SUCCESS,
-        data,
-    }))
+    .then(({ data }) => { 
+        action.request.method === 'delete' ? 
+            next({
+                type: SUCCESS,
+                id: action.id,
+            }) 
+            : 
+            next({
+                type: SUCCESS,
+                data,
+            })
+    })
     .catch(error => next({
         type: FAILURE,
         error: error.message,

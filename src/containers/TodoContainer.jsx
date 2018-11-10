@@ -7,16 +7,17 @@ export default class TodoContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            completed: false,
             editing: false,
         };
-    }   
-
+    }    
+    
     handleCheck = () => {
-        this.setState({ completed: !this.state.completed, })
+        const { id, onCheck } = this.props;   
+        const completed = !this.props.completed;        
+        onCheck(id, completed);
     }
 
-    handleEdit = () => {
+    handleEdit = () => {        
         this.setState({ editing: true, })
     }
 
@@ -24,18 +25,20 @@ export default class TodoContainer extends PureComponent {
         event.preventDefault();
         const { id, onDelete } = this.props;
         onDelete(id);
-        // console.log(this.props)
-    }
+    }    
 
     handleSave = (event) => {
-        event.preventDefault();
-        console.log('changed');
-        this.setState({ editing: false, });
+        event.preventDefault();    
+        const { id, onTodoTitleEdit } = this.props;
+        const el = document.getElementById('titleInput');
+        const title = el.value;
+        onTodoTitleEdit(id, title);
+        this.setState({ editing: false, });      
     }
 
     renderDisplayTodo() {
-        const { completed } = this.state;
-        const { title } = this.props;
+        // const { completed } = this.state;
+        const { title, completed } = this.props;
         return (
             <Todo 
                 title={title}

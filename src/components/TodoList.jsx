@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import TodoContainer from 'containers/TodoContainer';
 
 export default function TodoList(props) {
-    const { todos: { todos, fetching }, onDelete } = props;
+    const { todos: { todos, fetching }, onDelete, onCheck, onTodoTitleEdit } = props;
     
     return (          
         <ListGroup>     
@@ -15,6 +15,8 @@ export default function TodoList(props) {
                         key={todo.id} 
                         {...todo}
                         onDelete={onDelete}
+                        onCheck={onCheck}
+                        onTodoTitleEdit={onTodoTitleEdit} 
                     /> 
                 )
                 :
