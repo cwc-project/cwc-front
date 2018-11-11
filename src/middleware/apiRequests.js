@@ -18,10 +18,12 @@ const apiRequests = apiUrl => store => next => action => {
     
     return axios[action.request.method](`${apiUrl}${action.request.url}`, action.request.body)
     .then(({ data }) => { 
+        console.log('data from middleware', data)
         action.request.method === 'delete' ? 
             next({
                 type: SUCCESS,
                 id: action.id,
+                data,
             }) 
             : 
             next({

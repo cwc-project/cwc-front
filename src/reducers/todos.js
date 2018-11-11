@@ -1,19 +1,19 @@
-import { GET_TODOS, DELETE_TODO, CHECK_TODO, EDIT_TODO_TITLE } from '../actions';
+import { GET_TODOS, ADD_TODO, DELETE_TODO, CHECK_TODO, EDIT_TODO_TITLE } from '../actions';
 
-function todoReducer (state = {}, action) {
+function todoReducer(state = {}, action) {
     switch (action.type) {
-        case CHECK_TODO:
+        case CHECK_TODO:   
             if(state.id !== action.data.id) {
                 return state;
-            }
+            }            
         return action.data;
        
-        case EDIT_TODO_TITLE:    
+        case EDIT_TODO_TITLE:   
             if(state.id !== action.data.id) {
                 return state;
-            }
+            }            
             return action.data;
-    }
+    };
 };
 
 export default function reducer(state={todos: [], fetching: false}, action) {
@@ -21,10 +21,14 @@ export default function reducer(state={todos: [], fetching: false}, action) {
         case `${GET_TODOS}_REQUEST`:      
             return {...state, fetching: true, };
 
-        case GET_TODOS:
+        case GET_TODOS:            
             return {...state, todos: action.data, fetching: false, };
         
-        case DELETE_TODO:           
+        case ADD_TODO:          
+        console.log('add todo', action.data)  
+            return {...state, todos: [...state.todos, action.data], fetching: false, };
+        
+        case DELETE_TODO:                  
             const index = state.todos.findIndex(todo => todo.id === action.id)
             return {
                 ...state, 

@@ -1,6 +1,7 @@
 import './TodoEdit.css';
 import React from 'react';
 import ButtonComponent from 'components/ButtonComponent';
+import InlineThreeComponentsForm from 'components/InlineThreeComponentsForm';
 
 import { Save, Trash2 } from 'react-feather';
 import { ListGroupItem, Form, Input } from 'reactstrap';
