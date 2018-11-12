@@ -1,4 +1,17 @@
+/* body {
+    color: rgb(76, 76, 76)!important;
+} */
+
 .project {
     max-width: 650px;
     margin: auto;
+}
+.project-title {
+    cursor: pointer;
+}
+/* reactstrap */
+.card-body {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    background: #007bff;
 }

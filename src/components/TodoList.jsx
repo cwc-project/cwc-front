@@ -20,7 +20,7 @@ export default function TodoList(props) {
                     /> 
                 )
                 :
-                '...loading'
+                <div style={{ textAlign: 'center', }}>...loading</div>
             }
         </ListGroup>   
     );

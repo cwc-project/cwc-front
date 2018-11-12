@@ -1,0 +1,41 @@
+.todo-add-component {
+    margin-top: 0.05rem;
+    padding: .75rem 1.25rem;
+    border: 1.1px solid rgba(0, 0, 0, 0.125);    
+    border-radius: .25rem;
+    background: white;
+    box-shadow: 0 0px 9px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    bottom: 0;
+}
+
+.todo-add-form {    
+    display: flex;
+    align-items: center;
+}
+
+.todo-add-input {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.todo-add-input::placeholder {
+    color: rgb(170, 170, 170); 
+    font-weight: normal;
+}
+.todo-add-input::-webkit-input-placeholder { 
+    color: rgb(170, 170, 170); 
+    font-weight: normal;
+}
+.todo-add-input::-moz-placeholder { 
+    color: rgb(170, 170, 170); 
+    font-weight: normal;
+}
+.todo-add-input:-moz-placeholder { 
+    color: rgb(170, 170, 170); 
+    font-weight: normal;
+}
+.todo-add-input:-ms-input-placeholder { 
+    color: rgb(170, 170, 170); 
+    font-weight: normal;
+}

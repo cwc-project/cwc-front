@@ -1,3 +1,4 @@
+import './AddTodoForm.css';
 import React from 'react';
 import ButtonComponent from 'components/ButtonComponent';
 import InlineThreeComponentsForm from 'components/InlineThreeComponentsForm';
@@ -9,16 +10,16 @@ export default function AddTodoForm(props) {
     const { title, onChange, onAddTodo } = props;
 
     return (
-        <div>
-            <Form className="edit-form">
-                <ButtonComponent 
+        <div className="todo-add-component">
+            <Form className="todo-add-form">
+                {/* <ButtonComponent 
                     className="home-btn"
                     icon={<Home />}
                     // color="danger"
                     // onClick={onDelete}
-                />
+                /> */}
                 <Input 
-                    className="addTodo-input"                    
+                    className="todo-add-input"                    
                     type="text" 
                     name="title"
                     value={title}  
@@ -27,7 +28,7 @@ export default function AddTodoForm(props) {
                     autoFocus
                  />
                 <ButtonComponent 
-                    className="commitTodo-btn"
+                    className="add-btn"
                     icon={<Plus />}
                     onClick={onAddTodo}
                     color="primary"

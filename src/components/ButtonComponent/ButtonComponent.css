@@ -10,3 +10,9 @@
     background-color: transparent;
     border-color: transparent;
 }
+.add-btn {
+    margin-left: 1.25rem;
+}
+.add-btn * {
+    stroke-width: 3;
+}
