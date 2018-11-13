@@ -8,30 +8,43 @@ export default class Heading extends PureComponent {
         this.state = {
             modal: false,
             title: 'CWC v.0'
-        };       
+        };  
     }
 
-    toggle = () => this.setState({modal: !this.state.modal})
+    componentDidUpdate() {
+        const { modal } = this.state;
+        if(modal) this.title.focus(); 
+    }
+
+    toggle = () => {
+        this.setState({modal: !this.state.modal});                  
+    }
 
     handleSubmit = () => {
-        debugger
-        const title = this._projectTitle.value;
-        this.setState({ modal: !this.state.modal, title: title,  });
+        const title = this.title.value; // берется методом из reactstrap
+        this.setState({ title, });
+        this.toggle();
     }
-    handleChange = (event) => this.setState({ [event.target.name]: event.target.value, })
 
     render() {
         const { title } = this.state;
+
         return (
             <CardTitle>          
-                <span className="project-title" title="Click for set heading" onClick={this.toggle}>{title}</span>           
+                <span className="project-title" title="Click for set heading" onClick={this.toggle} id="new">{title}</span>           
                 <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Переименование списка задач</ModalHeader>
                     <ModalBody>                        
-                        <Input onChange={this.handleChange} type="textarea" name="title" id="exampleText" defaultValue={title} />                     
+                        <Input 
+                            type="textarea" 
+                            name="title" 
+                            defaultValue={title} 
+                            innerRef={input => this.title = input}  
+                        />                 
                     </ModalBody>
                     <ModalFooter>
-                        {/* <Button color="primary" onClick={this.handleSubmit}>Применить изменения</Button>{' '}                        */}
+                        <Button color="primary" onClick={this.handleSubmit}>Применить изменения</Button>{' '}   
+                        <Button color="secondary" onClick={this.toggle}>Отмена</Button>                    
                     </ModalFooter>
                 </Modal>
             </CardTitle>
