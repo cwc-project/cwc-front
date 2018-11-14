@@ -8,8 +8,13 @@ export default class TodoContainer extends PureComponent {
         super(props);
         this.state = {
             editing: false,
+            newTitle: '',
         };
-    }    
+    } 
+    
+    // handleChange = () => { this.setState({})
+
+    // }
     
     handleCheck = () => {
         const { id, onCheck } = this.props;   

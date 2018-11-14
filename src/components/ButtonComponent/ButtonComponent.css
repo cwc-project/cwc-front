@@ -16,3 +16,6 @@
 .add-btn * {
     stroke-width: 3;
 }
+.log-btn {
+    margin-left: 0.3rem;    
+}

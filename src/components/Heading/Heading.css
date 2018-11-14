@@ -1,6 +1,7 @@
 /* reactstrap */
-.card-title {
+.todos.card-title {
     text-align: center;
     color: white;
     font-weight: 800;
+    cursor: pointer;
 }

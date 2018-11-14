@@ -7,7 +7,7 @@ export default class Heading extends PureComponent {
         super(props);
         this.state = {
             modal: false,
-            title: 'CWC v.0'
+            title: 'CWC v.0',
         };  
     }
 
@@ -22,7 +22,8 @@ export default class Heading extends PureComponent {
 
     handleSubmit = () => {
         const title = this.title.value; // берется методом из reactstrap
-        this.setState({ title, });
+        if(title) this.setState({ title, });
+        
         this.toggle();
     }
 
@@ -30,14 +31,17 @@ export default class Heading extends PureComponent {
         const { title } = this.state;
 
         return (
-            <CardTitle>          
-                <span className="project-title" title="Click for set heading" onClick={this.toggle} id="new">{title}</span>           
-                <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle} className={this.props.className}>
+            <CardTitle title="Click for set heading" onClick={this.toggle} className="todos card-title">          
+                <span className="project-title" id="new">{title}</span>           
+                <Modal 
+                    isOpen={this.state.modal} 
+                    fade={false}
+                    toggle={this.toggle}                     
+                >
                     <ModalHeader toggle={this.toggle}>Переименование списка задач</ModalHeader>
                     <ModalBody>                        
                         <Input 
                             type="textarea" 
-                            name="title" 
                             defaultValue={title} 
                             innerRef={input => this.title = input}  
                         />                 

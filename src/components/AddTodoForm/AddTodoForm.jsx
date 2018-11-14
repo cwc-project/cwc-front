@@ -1,10 +1,9 @@
 import './AddTodoForm.css';
 import React from 'react';
-import ButtonComponent from 'components/ButtonComponent';
-import InlineThreeComponentsForm from 'components/InlineThreeComponentsForm';
 
-import { Home, Plus } from 'react-feather';
+import { Plus } from 'react-feather';
 import { Form, Input } from 'reactstrap';
+import ButtonComponent from 'components/ButtonComponent';
 
 export default function AddTodoForm(props) {
     const { title, onChange, onAddTodo } = props;
@@ -12,12 +11,6 @@ export default function AddTodoForm(props) {
     return (
         <div className="todo-add-component">
             <Form className="todo-add-form">
-                {/* <ButtonComponent 
-                    className="home-btn"
-                    icon={<Home />}
-                    // color="danger"
-                    // onClick={onDelete}
-                /> */}
                 <Input 
                     className="todo-add-input"                    
                     type="text" 
