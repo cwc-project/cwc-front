@@ -1,15 +1,15 @@
 import React from 'react';
-import { ListGroup, } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+import { ListGroup, } from 'reactstrap';
 import TodoContainer from 'containers/TodoContainer';
 
 export default function TodoList(props) {
-    const { todos: { todos, fetching }, onDelete, onCheck, onTodoTitleEdit } = props;
+    const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = props;
     
     return (          
         <ListGroup>     
-            { !fetching && todos.length ?
+            { !loading && todos.length ?
                 todos.map((todo, idx) => 
                     <TodoContainer 
                         key={todo.id} 
@@ -27,5 +27,9 @@ export default function TodoList(props) {
 };
 
 TodoList.propTypes = {
-    todos: PropTypes.object.isRequired,
+    todos: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onCheck: PropTypes.func.isRequired,
+    onTodoTitleEdit: PropTypes.func.isRequired,
 };

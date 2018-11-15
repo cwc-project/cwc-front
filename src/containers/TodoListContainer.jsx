@@ -16,11 +16,12 @@ class TodoListContainer extends PureComponent {
     }
     
     render() {
-        const { todos, onDelete, onCheck, onTodoTitleEdit } = this.props;
+        const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
 
         return(
             <TodoList 
-                todos={todos}  
+                todos={todos}
+                loading={loading}  
                 onDelete={onDelete}  
                 onCheck={onCheck}
                 onTodoTitleEdit={onTodoTitleEdit}            
@@ -32,6 +33,7 @@ class TodoListContainer extends PureComponent {
 function mapStateToProps(state) {
     return {
         todos: state.todos,
+        loading: state.loading.todos,
     };
 };
 

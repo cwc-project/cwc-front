@@ -6,7 +6,7 @@ import { Save, Trash2 } from 'react-feather';
 import { ListGroupItem, Form, Input } from 'reactstrap';
 
 export default function TodoEdit(props) {
-    const { title, onDelete, onSave } = props;
+    const { title, onDelete, onSave, onChange } = props;
 
     return (
         <ListGroupItem>
@@ -20,9 +20,9 @@ export default function TodoEdit(props) {
                 <Input 
                     className="title-edit-input"
                     type="text" 
-                    defaultValue={title}  
-                    onChange
-                    id='titleInput'    //надо заменить на ref   
+                    name="title"
+                    value={title}
+                    onChange={onChange}
                     autoFocus
                  />
                 <ButtonComponent 

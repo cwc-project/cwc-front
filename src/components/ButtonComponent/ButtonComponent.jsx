@@ -2,7 +2,7 @@ import './ButtonComponent.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button  }  from 'reactstrap';
+import { Button }  from 'reactstrap';
 
 export default function ButtonComponent(props) {
     const { icon, children } = props;

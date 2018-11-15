@@ -8,13 +8,13 @@ export default class TodoContainer extends PureComponent {
         super(props);
         this.state = {
             editing: false,
-            newTitle: '',
+            title: this.props.title,
         };
     } 
     
-    // handleChange = () => { this.setState({})
-
-    // }
+    handleChange = (event) => { 
+        this.setState({ title: event.target.value, })
+    }
     
     handleCheck = () => {
         const { id, onCheck } = this.props;   
@@ -35,14 +35,12 @@ export default class TodoContainer extends PureComponent {
     handleSave = (event) => {
         event.preventDefault();    
         const { id, onTodoTitleEdit } = this.props;
-        const el = document.getElementById('titleInput');
-        const title = el.value;
+        const { title } = this.state;
         onTodoTitleEdit(id, title);
         this.setState({ editing: false, });      
     }
 
     renderDisplayTodo() {
-        // const { completed } = this.state;
         const { title, completed } = this.props;
         return (
             <Todo 
@@ -55,20 +53,19 @@ export default class TodoContainer extends PureComponent {
     }
 
     renderEditTodo() {
-        const { title } = this.props;
+        const { title } = this.state;
         return(
            <TodoEdit 
                 title={title} 
                 onDelete={this.handleDelete}
                 onSave={this.handleSave}
+                onChange={this.handleChange}
             />
         );
     }
 
     render() {
-        const { completed, editing } = this.state;
-        const { title } = this.props;
-
+        const { editing } = this.state;
         return editing ? this.renderEditTodo() :  this.renderDisplayTodo();              
     }
 };

@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 
 import { Container, Card, CardBody } from 'reactstrap';
 
-import Heading from 'components/Heading';
+import Heading from 'containers/HeadingContainer';
 import AddTodoForm from 'containers/AddTodoFormContainer';
 import TodoList from 'containers/TodoListContainer';
 import Header from 'components/Header';

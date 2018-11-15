@@ -14,4 +14,7 @@
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
     background: #007bff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }

@@ -9,7 +9,6 @@ export function getTodos() {
         type: GET_TODOS,
         request: {
             method: 'get',
-            // url: '/users/1/todos',
             url: '/projects',
         },
     };
@@ -20,7 +19,6 @@ export function addTodo(title) {
         type: ADD_TODO,
         request: {
             method: 'post',
-            // url: '/users/1/todos',
             url: '/projects',
             body: { title }, 
         },
@@ -28,12 +26,11 @@ export function addTodo(title) {
 };
 
 export function checkTodo(id, completed) {
-    return {
+    return {        
         type: CHECK_TODO,
-        request: {
+        request: {            
             method: 'put',
             url: `/projects/${id}`,
-            // url: `/todos/${id}?userId=1`,
             body: { completed, },
         },
     };
@@ -45,8 +42,7 @@ export function deleteTodo(id) {
         id,
         request: {
             method: 'delete',
-            url: `/projects/${id}`,
-            // url: `/todos/${id}?userId=1`,
+            url: `/projects/${id}`,    
         },
     };
 };
