@@ -5,11 +5,11 @@ import { ListGroup, } from 'reactstrap';
 import TodoContainer from 'containers/TodoContainer';
 
 export default function TodoList(props) {
-    const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = props;
+    const { todos, loading, onDelete, onCheck, onTodoTitleEdit, project_id } = props;
     
     return (          
         <ListGroup>     
-            { !loading && todos.length ?
+            { !loading ?
                 todos.map((todo, idx) => 
                     <TodoContainer 
                         key={todo.id} 
@@ -17,6 +17,7 @@ export default function TodoList(props) {
                         onDelete={onDelete}
                         onCheck={onCheck}
                         onTodoTitleEdit={onTodoTitleEdit} 
+                        project_id={project_id}
                     /> 
                 )
                 :

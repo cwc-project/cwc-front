@@ -6,18 +6,17 @@ export function getProjects() {
         type: GET_PROJECTS,
         request: {
             method: 'get',
-            url: '/projects',
+            url: '/projects',//пока будет использовать только один проект
         },
     };
 };
 
-export function editTodoTitle(id, title) { 
+export function editProjectTitle(id, title) { 
     return {
         type: EDIT_PROJECT_TITLE,
         request: {
             method: 'put',
-            url: `/projects/${id}`,
-            body: { title },  
+            url: `/projects/${id}/?title=${title}`,
         },
     };
 };

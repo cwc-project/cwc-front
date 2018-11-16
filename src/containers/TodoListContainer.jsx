@@ -11,27 +11,30 @@ class TodoListContainer extends PureComponent {
     }
 
     componentDidMount() {
-        const { onGetTodos } = this.props;
-        onGetTodos();
+        const { onGetTodos, project_id } = this.props;
+        onGetTodos(project_id);
     }
     
     render() {
-        const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
+        const { todos, loading, onDelete, onCheck, onTodoTitleEdit, project_id } = this.props;
 
         return(
             <TodoList 
                 todos={todos}
                 loading={loading}  
+                project_id={project_id}
                 onDelete={onDelete}  
                 onCheck={onCheck}
                 onTodoTitleEdit={onTodoTitleEdit}            
             />
+     
         );
     }
 };
 
 function mapStateToProps(state) {
     return {
+        project_id: state.project.id,
         todos: state.todos,
         loading: state.loading.todos,
     };
@@ -39,10 +42,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onGetTodos: () => dispatch(getTodos()),
+        onGetTodos: project_id => dispatch(getTodos(project_id)),
         onDelete: id => dispatch(deleteTodo(id)),
-        onCheck: (id, complete) => dispatch(checkTodo(id, complete)),
-        onTodoTitleEdit: (id, title) => dispatch(editTodoTitle(id, title)),
+        onCheck: (id, complete, project_id) => dispatch(checkTodo(id, complete, project_id)),
+        onTodoTitleEdit: (id, title, project_id) => dispatch(editTodoTitle(id, title, project_id)),
     };
 };
 

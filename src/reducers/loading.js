@@ -1,4 +1,4 @@
-import { GET_TODOS, }  from '../actions';
+import { GET_TODOS, GET_PROJECTS }  from '../actions';
 function reducer( state = 
     { 
         projects: false, 
@@ -10,6 +10,12 @@ function reducer( state =
 
         case GET_TODOS: 
             return {...state, todos: false, };
+
+        case `${GET_PROJECTS}_REQUEST`:
+            return {...state, projects: true, };
+
+        case GET_PROJECTS: 
+            return {...state, projects: false, };
 
         default:
             return state;

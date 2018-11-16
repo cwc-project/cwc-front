@@ -27,7 +27,7 @@ export default function reducer(state=[], action) {
             return [...state, action.data];
         
         case DELETE_TODO:                  
-            const index = state.findIndex(todo => todo.id === action.data.id)
+            const index = state.findIndex(todo => todo.id === action.data.id);
             return [...state.slice(0, index), ...state.slice(index + 1)];
              
         case CHECK_TODO:

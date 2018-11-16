@@ -3,9 +3,10 @@ import React from 'react';
 import { Modal, ModalHeader, ModalBody, CardTitle, ModalFooter, Input, Button } from 'reactstrap';
 
 export default function Heading (props) {
-    const { title, modal, onToggle, onSubmit } = props;
-    
+    const { title, modal, onToggle, onSubmit, getInput} = props;  
+   
     return (
+
         <CardTitle title="Click for set heading" onClick={onToggle} className="todos card-title">          
             <span className="project-title" id="new">{title}</span>           
             <Modal 
@@ -18,11 +19,11 @@ export default function Heading (props) {
                     <Input 
                         type="textarea" 
                         defaultValue={title} 
-                        // innerRef={input => this.title = input}  
+                        innerRef={elem => getInput(elem)}                    
                     />                 
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={onSubmit}>Применить изменения</Button>{' '}   
+                    <Button color="primary" onClick={onSubmit} >Применить изменения</Button>{' '}   
                     <Button color="secondary" onClick={onToggle}>Отмена</Button>                    
                 </ModalFooter>
             </Modal>

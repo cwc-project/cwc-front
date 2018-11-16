@@ -17,8 +17,8 @@ class AddTodoFormContainer extends PureComponent {
         const title = this.state.title;
 
         if(title) {
-            const { onAddTodo } = this.props;
-            onAddTodo(title);
+            const { onAddTodo, project_id } = this.props;
+            onAddTodo(title, project_id);
             this.setState({ title: '', });
         };
     }
@@ -37,14 +37,19 @@ class AddTodoFormContainer extends PureComponent {
                 onAddTodo={this.handleAddTodo}            
             />
         );
-
     }
 };
 
-function addDispatchToProps(dispatch) {
+function mapStateToProps(store) {
     return {
-        onAddTodo: title => dispatch(addTodo(title)), 
+        project_id: store.project.id,
     };
 };
 
-export default connect(null, addDispatchToProps)(AddTodoFormContainer);
+function mapDispatchToProps(dispatch) {
+    return {
+        onAddTodo: (title, project_id) => dispatch(addTodo(title, project_id)), 
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddTodoFormContainer);

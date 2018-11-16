@@ -17,9 +17,9 @@ export default class TodoContainer extends PureComponent {
     }
     
     handleCheck = () => {
-        const { id, onCheck } = this.props;   
+        const { id, onCheck, project_id } = this.props;   
         const completed = !this.props.completed;        
-        onCheck(id, completed);
+        onCheck(id, completed, project_id);
     }
 
     handleEdit = () => {        
@@ -28,15 +28,15 @@ export default class TodoContainer extends PureComponent {
 
     handleDelete = (event) => {
         event.preventDefault();
-        const { id, onDelete } = this.props;
-        onDelete(id);
+        const { id, onDelete, project_id} = this.props;
+        onDelete(id, project_id);
     }    
 
     handleSave = (event) => {
         event.preventDefault();    
-        const { id, onTodoTitleEdit } = this.props;
+        const { id, onTodoTitleEdit, project_id } = this.props;
         const { title } = this.state;
-        onTodoTitleEdit(id, title);
+        onTodoTitleEdit(id, title, project_id);
         this.setState({ editing: false, });      
     }
 
