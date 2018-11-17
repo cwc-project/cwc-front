@@ -15,7 +15,7 @@
 }
 .todo-title.list-group-item-heading{
     margin-bottom: 0;
-    /* width: 80%; */
+    word-break: break-word;
 }
 .todo.completed .todo-title {
     text-decoration: line-through;
@@ -26,5 +26,11 @@
 }
 .todo-right-side {
     display: flex;
-    flex-wrap: wrap-reverse;
+    justify-content: flex-end;
 }
+
+@media screen and (max-width:479px) {
+    .todo-right-side {
+        flex-direction: column-reverse;
+    }
+  }

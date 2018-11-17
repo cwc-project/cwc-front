@@ -18,3 +18,11 @@
     top: 0;
     z-index: 1;
 }
+
+/* перенести в project */
+.loading-project {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 200px;
+}

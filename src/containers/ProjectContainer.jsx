@@ -16,7 +16,10 @@ class ProjectContainer extends PureComponent {
     render() {     
         const { project_id } = this.props;
         return (  
-            project_id ? this.props.children : ''
+            project_id ? 
+                this.props.children 
+            : 
+                <div className="loading-project">...loading project</div>
             
         );
     }

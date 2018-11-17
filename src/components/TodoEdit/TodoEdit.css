@@ -5,4 +5,5 @@
 .title-edit-input {
     font-size: 1.25rem;
     font-weight: 500;
+    resize: none;
 }
