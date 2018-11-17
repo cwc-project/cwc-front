@@ -10,3 +10,27 @@
     display: flex;
     align-items: center;
 }
+.user-name {
+    height: 26.4px;
+    border-bottom: 0.5px dotted;
+    line-height: 1.8;
+    color: #007bff;
+}
+
+/* адаптивность */
+@media screen and (max-width:479px) {
+    .header {
+        margin-bottom: 0.5rem;
+        padding: 1rem;
+    }
+}
+/* 
+@media screen and (max-width:320px) {
+    .header {
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+    }
+    .header-log {        
+        align-items: center;
+    }
+} */

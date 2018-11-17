@@ -7,3 +7,20 @@
     font-weight: 500;
     resize: none;
 }
+
+/* адаптивность */
+
+@media screen and (max-width:479px) {
+    .edit-form {
+        flex-wrap: wrap;
+    }
+    .title-edit-input {
+        width: 82%;
+    }
+}
+
+@media screen and (max-width:320px) {
+    .title-edit-input {
+        width: 78%;
+    }
+}

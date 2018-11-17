@@ -16,6 +16,19 @@
 .add-btn * {
     stroke-width: 3;
 }
-.log-btn {
-    margin-left: 0.3rem;    
+.btn-light.log-btn,
+.btn-light:not(:disabled):not(.disabled):active.log-btn {
+    background: transparent;
+    border-color: transparent;  
+}
+
+/* адаптивность */
+@media screen and (max-width:479px) {
+    .save-btn {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 0.8rem;
+        background-color: #efefef;
+        border-color: #e9e8e8;
+    }
 }

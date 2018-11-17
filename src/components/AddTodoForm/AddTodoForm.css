@@ -13,12 +13,11 @@
     display: flex;
     align-items: center;
 }
-
 .todo-add-input {
     font-size: 1.25rem;
     font-weight: 500;
+    resize: none;
 }
-
 .todo-add-input::placeholder {
     color: rgb(170, 170, 170); 
     font-weight: normal;
