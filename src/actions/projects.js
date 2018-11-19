@@ -11,8 +11,8 @@ export function getProjects() {
     };
 };
 
-export function editProjectTitle(id, title) { 
-    return {
+export function editProjectTitle(id, title) {   
+    return {        
         type: EDIT_PROJECT_TITLE,
         request: {
             method: 'put',

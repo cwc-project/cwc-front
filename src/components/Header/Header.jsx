@@ -1,7 +1,7 @@
 import './Header.css';
 import React, { PureComponent } from 'react';
 
-import { LogIn, LogOut } from 'react-feather';
+import { LogIn } from 'react-feather';
 import ButtonComponent from 'components/ButtonComponent';
 
 export default class Header extends PureComponent {

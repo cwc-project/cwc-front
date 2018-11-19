@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtactPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (env, options) => {
@@ -56,6 +57,17 @@ const development = options.mode === 'development';
                         },
                     }, 'sass-loader'],
                 },
+                {
+                    test: /\.(png|gif|jpe?g)$/,
+                    use: [
+                        {
+                          loader: 'file-loader',
+                          options: {
+                              name: 'img/[name].[ext]',
+                          },
+                        },
+                    ]
+                },     
             ]
         },
         plugins: [
@@ -66,6 +78,10 @@ const development = options.mode === 'development';
             new MiniCssExtactPlugin({
                 filename: development ? 'bundle.css' : 'bundle.min.css',
             }),
+            new CopyWebpackPlugin([
+                {from:'src/favicon.ico',to:'./'},
+                {from:'src/img',to:'img'},
+            ]), 
             new CleanWebpackPlugin('dist', {}),
         ],    
     };

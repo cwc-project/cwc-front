@@ -1,0 +1,43 @@
+import './TodoList.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
+
+import { ListGroup, } from 'reactstrap';
+import TodoContainer from 'containers/TodoContainer';
+
+export default function TodoList(props) {
+    const { todos, loading, onDelete, onCheck, onTodoTitleEdit, project_id } = props;
+    
+    return (          
+        !loading ?       
+            <TransitionGroup component={ListGroup} className="todo-list">                
+                {todos.map((todo, idx) => 
+                    <CSSTransition
+                        key={idx}
+                        timeout={500}
+                        classNames="slide"
+                    >
+                        <TodoContainer 
+                            key={todo.id} 
+                            {...todo}
+                            onDelete={onDelete}
+                            onCheck={onCheck}
+                            onTodoTitleEdit={onTodoTitleEdit} 
+                            project_id={project_id}
+                        /> 
+                    </CSSTransition>                       
+                )}                 
+            </TransitionGroup>
+        :
+            <div style={{ textAlign: 'center', }}>...loading</div>
+    );
+};
+
+TodoList.propTypes = {
+    todos: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onCheck: PropTypes.func.isRequired,
+    onTodoTitleEdit: PropTypes.func.isRequired,
+};

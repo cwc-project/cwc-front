@@ -18,7 +18,7 @@ export default function reducer(state={}, action) {
             return action.data[0]; //пока работаем только с первым project в массиве     
 
         case EDIT_PROJECT_TITLE:    
-            return projectReducer();
+            return projectReducer(action.data, action);
 
         default:
             return state;
