@@ -41,19 +41,24 @@ export default class TodoContainer extends PureComponent {
     }
 
     renderDisplayTodo() {
-        const { title, completed } = this.props;
+        const { id, title, completed, deadline, project_id } = this.props;
+
         return (
             <Todo 
+                id={id}
                 title={title}
                 completed={completed}
+                deadline={deadline}
                 onCheck={this.handleCheck}
                 onEdit={this.handleEdit}
+                project_id={project_id}
             />
         );
     }
 
     renderEditTodo() {
         const { title } = this.state;
+
         return(
            <TodoEdit 
                 title={title} 

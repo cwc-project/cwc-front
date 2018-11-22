@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { ListGroupItem, ListGroupItemHeading, Col, Row } from 'reactstrap';
+import { ListGroupItem, ListGroupItemHeading } from 'reactstrap';
 import { CheckSquare, Square, Edit2 } from 'react-feather';
 
 import Timer from 'containers/TimerContainer';
@@ -11,7 +11,7 @@ import ButtonComponent from 'components/ButtonComponent';
 
 
 export default function Todo(props) {    
-    const { completed, onCheck, onEdit, title } = props;
+    const { id, title, completed, deadline, project_id, onCheck, onEdit } = props;
     const todoCheck = classNames( 'todo',
         completed ? 'completed' : 'uncompleted'
     );
@@ -27,7 +27,11 @@ export default function Todo(props) {
                 <ListGroupItemHeading className="todo-title">{title}</ListGroupItemHeading>                
             </div>
             <div className="todo-right-side">
-                <Timer />
+                <Timer 
+                    id={id}
+                    deadline={deadline} 
+                    project_id={project_id}               
+                />
                 <ButtonComponent 
                     className="edit"
                     icon={<Edit2 />}  

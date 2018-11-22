@@ -1,4 +1,4 @@
-import { GET_TODOS, ADD_TODO, DELETE_TODO, CHECK_TODO, EDIT_TODO_TITLE } from '../actions';
+import { GET_TODOS, ADD_TODO, DELETE_TODO, CHECK_TODO, EDIT_TODO_TITLE, SET_TODO_DEADLINE } from '../actions';
 
 function todoReducer(state = {}, action) {
     switch (action.type) {
@@ -10,6 +10,12 @@ function todoReducer(state = {}, action) {
         return action.data;
        
         case EDIT_TODO_TITLE:   
+            if(state.id !== action.data.id) {
+                return state;
+            }            
+            return action.data;
+        
+        case SET_TODO_DEADLINE:   
             if(state.id !== action.data.id) {
                 return state;
             }            
@@ -34,6 +40,9 @@ export default function reducer(state=[], action) {
             return state.map(todo => todoReducer(todo, action));
 
         case EDIT_TODO_TITLE:    
+            return state.map(todo => todoReducer(todo, action));
+
+        case SET_TODO_DEADLINE:    
             return state.map(todo => todoReducer(todo, action));
 
         default:
