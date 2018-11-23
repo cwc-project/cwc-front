@@ -3,6 +3,9 @@
 .delete-btn {
     margin-right: 0.5rem;
 }
+.edit-btn {
+    margin-left: 0.3rem;
+}
 .save-btn {
     margin-left: 0.5rem;
 }
@@ -17,7 +20,23 @@
     stroke-width: 3;
 }
 .btn-light.log-btn,
+.btn-light.timer-btn,
 .btn-light:not(:disabled):not(.disabled):active.log-btn {
+    background: transparent;
+    border-color: transparent;  
+}
+.btn-light.timer-btn {
+    line-height: 1;
+}
+
+.date-output {
+    font-style: italic;
+    color: #8b8b8b;
+}
+.btn-light.timer-btn:hover,
+.btn-light:hover .date-output,
+.btn-light:not(:disabled):not(.disabled):active.timer-btn {
+    color: #000;
     background: transparent;
     border-color: transparent;  
 }

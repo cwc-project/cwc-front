@@ -33,7 +33,7 @@ export default function Todo(props) {
                     project_id={project_id}               
                 />
                 <ButtonComponent 
-                    className="edit"
+                    className="edit-btn"
                     icon={<Edit2 />}  
                     onClick={onEdit}        
                 />   

@@ -1,0 +1,45 @@
+.modal-body.timer-form-body {
+    padding: 1rem 2.7rem;
+    /* display: flex;
+    align-items: center; */
+}
+.timer-reset {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.timer-reset:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+.timer-reset:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+}
+.timer-reset:active {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.5);
+    background-color: #bd2130;
+    border-color: #b21f2d;
+}
+.timer-input {
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-left: 1.1rem;
+    color: rgb(111, 111, 111);
+}
+.timer-input:focus {
+    color: black;
+}
+.timer-date-input-group {
+    margin-bottom: 0.5rem;
+}
+.timer-set-btn {
+    border-right: 1px solid white;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog.timer-modal-form {
+        max-width: 320px;
+        margin: 1.75rem auto;
+    }
+}

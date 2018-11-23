@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { getProjects, editProjectTitle } from '../actions';
+import { editProjectTitle } from '../actions';
 
 import Heading from 'components/Heading';
 
