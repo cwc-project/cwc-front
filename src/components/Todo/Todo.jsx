@@ -11,9 +11,10 @@ import ButtonComponent from 'components/ButtonComponent';
 
 
 export default function Todo(props) {    
-    const { id, title, completed, deadline, project_id, onCheck, onEdit } = props;
+    const { id, title, completed, deadline, project_id, onCheck, onEdit, timeElapsed } = props;
     const todoCheck = classNames( 'todo',
-        completed ? 'completed' : 'uncompleted'
+        completed ? 'completed' : 'uncompleted',
+        !completed && timeElapsed === 0 ? 'overdue-task' : ''
     );
 
     return (
@@ -30,7 +31,8 @@ export default function Todo(props) {
                 <Timer 
                     id={id}
                     deadline={deadline} 
-                    project_id={project_id}               
+                    project_id={project_id} 
+                    timeElapsed={timeElapsed}              
                 />
                 <ButtonComponent 
                     className="edit-btn"

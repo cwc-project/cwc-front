@@ -27,6 +27,7 @@
 }
 .btn-light.timer-btn {
     line-height: 1;
+    box-shadow: none;
 }
 
 .date-output {
@@ -36,9 +37,11 @@
 .btn-light.timer-btn:hover,
 .btn-light:hover .date-output,
 .btn-light:not(:disabled):not(.disabled):active.timer-btn {
-    color: #000;
+    /* color: #000; */
+    text-shadow: 2px 2px 3px #d1d1d1;
     background: transparent;
     border-color: transparent;  
+    box-shadow: none;
 }
 
 /* адаптивность */

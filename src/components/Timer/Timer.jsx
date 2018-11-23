@@ -1,6 +1,7 @@
 import './Timer.css';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { Clock, Calendar, Watch, Check, X } from 'react-feather';
 import { 
@@ -29,6 +30,7 @@ export default function Timer(props) {
         onToggle,
         onToggleSplit,
         onDeadlineSet, 
+        onTimerReset,
         onGetDate, 
         onGetTime, 
         onFocusDate,
@@ -37,7 +39,8 @@ export default function Timer(props) {
         outputDate,       
     } = props;
 
-    const now = new Date();    
+    const now = new Date();   
+    // const deadlineDate =  new Date(deadline);
     const year = deadline ? new Date(deadline).getFullYear() : now.getFullYear();
     const month = deadline ? new Date(deadline).getMonth() + 1 : now.getMonth() + 1;
     const day =  deadline ? new Date(deadline).getDate() : now.getDate(); 
@@ -47,7 +50,11 @@ export default function Timer(props) {
     const maxDate = `${year + 5}-${month}-${day}`;
     const time = `${hours > 9 ? hours : '0' + hours}:${minutes > 9 ? minutes : '0' + minutes}`;
     const minTime = `${hours > 9 ? hours : '0' + hours}:${minutes > 9 ? minutes + 1 : '0' + minutes + 1}`;  
-    
+    const hour = 3600000;
+    const warning = Date.parse(deadline) - Date.now() - hour;
+    const timeLeftStyle = classNames('time-left', 
+        (warning < 0) ? 'timer-warning' : ''
+    );    
 
     return ( 
         <div>
@@ -56,7 +63,7 @@ export default function Timer(props) {
                     className="timer-btn"
                     onClick={onToggle}
                 >
-                    <div>{timeLeft}</div>
+                    <div className={timeLeftStyle}>{timeLeft}</div>
                     <sub className="date-output">{outputDate}</sub>
                 </ButtonComponent>
             : 
@@ -75,10 +82,10 @@ export default function Timer(props) {
                                 type="date"   
                                 name="date"  
                                 className="timer-input"                       
-                                defaultValue={date}                            
+                                defaultValue={date}     
+                                min="2018-11-02"                       
                                 max={maxDate}
-                                innerRef={elem => onGetDate(elem)}
-                                required                       
+                                innerRef={elem => onGetDate(elem)}                    
                             />
                             <InputGroupAddon addonType="append" onClick={onFocusDate}><InputGroupText><Calendar /></InputGroupText></InputGroupAddon>
                         </InputGroup>
@@ -86,12 +93,9 @@ export default function Timer(props) {
                             <Input 
                                 type="time" 
                                 name="time"
-                                className="timer-input"  
-                                
-                                min={minTime}
+                                className="timer-input"                               
                                 defaultValue={time}
                                 innerRef={elem => onGetTime(elem)}
-                                required
                             />         
                             <InputGroupAddon addonType="append" onClick={onFocusTime}><InputGroupText><Watch /></InputGroupText></InputGroupAddon>
                         </InputGroup>                   
@@ -110,7 +114,7 @@ export default function Timer(props) {
                             <DropdownMenu>
                                 <DropdownItem header>Advanced options</DropdownItem> 
                                 <DropdownItem divider />             
-                                <DropdownItem className="timer-reset"> <X /> Reset timer</DropdownItem>
+                                <DropdownItem className="timer-reset" onClick={onTimerReset}> <X /> Reset timer</DropdownItem>
                                 </DropdownMenu>
                         </ButtonDropdown>                  
                     </ModalFooter>

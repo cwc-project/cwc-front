@@ -1,7 +1,5 @@
 .modal-body.timer-form-body {
     padding: 1rem 2.7rem;
-    /* display: flex;
-    align-items: center; */
 }
 .timer-reset {
     color: #fff;
@@ -35,6 +33,12 @@
 }
 .timer-set-btn {
     border-right: 1px solid white;
+}
+.timer-warning {
+    color: tomato;
+}
+.time-left {
+    font-weight: 500;
 }
 
 @media (min-width: 576px) {

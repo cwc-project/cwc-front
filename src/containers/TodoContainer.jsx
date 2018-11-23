@@ -1,40 +1,54 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
 
 import Todo from 'components/Todo';
 import TodoEdit from 'components/TodoEdit';
 
-class TodoContainer extends PureComponent {
+export default class TodoContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             editing: false,
             title: this.props.title,
-            elapsed: 0, 
-        };
-        this.deadline = this.props.deadline ? new Date(this.props.deadline).getTime() : undefined;
+            timeElapsed: null, 
+        };       
     } 
 
-    componentDidMount() {
-        if(this.deadline) {
+    componentDidMount() {  
+        if(this.props.deadline) {       
             this.tick();
         };
     }
 
-    tick = () => {    
-        const start = Date.now()       
-        if(this.deadline > start) {
-            this.interval = setInterval(() => {  
-                const now = Date.now();             
-                const diff = this.deadline - now;
-                console.log(this.deadline, now, diff) 
-                if(diff > 0) {
-                    this.setState({ 
-                        elapsed: diff,           
-                    });
-                } else {
-                    clearInterval(this.interval);
-                }       
+    componentWillUnmount() {
+        clearInterval(this.interval);  
+    }
+
+    componentDidUpdate(prevProps) {        
+        if (this.props.deadline !== prevProps.deadline) {  
+            clearInterval(this.interval);         
+            this.tick();
+        };
+    }
+
+    elapsedTimeCounter = (deadline) => {
+        const now = Date.now();                      
+        const diff = deadline - now;                              
+        if(diff > 0) {
+            this.setState({ timeElapsed: diff, });
+        } else {
+            this.setState({ timeElapsed: 0, });
+            clearInterval(this.interval);
+        };       
+    }
+
+    tick = () => {   
+        const start = Date.now();     
+        const deadline  = new Date(this.props.deadline).getTime();  
+        if(deadline > start) {
+            this.elapsedTimeCounter(deadline);
+            this.interval = setInterval(() => { 
+                console.log('tick'); // доп инфа
+                this.elapsedTimeCounter(deadline);  
             }, 1000);
         };       
     }
@@ -69,6 +83,7 @@ class TodoContainer extends PureComponent {
 
     renderDisplayTodo() {
         const { id, title, completed, deadline, project_id } = this.props;
+        const { timeElapsed } = this.state;
 
         return (
             <Todo 
@@ -79,6 +94,7 @@ class TodoContainer extends PureComponent {
                 onCheck={this.handleCheck}
                 onEdit={this.handleEdit}
                 project_id={project_id}
+                timeElapsed={timeElapsed}
             />
         );
     }
@@ -87,7 +103,7 @@ class TodoContainer extends PureComponent {
         const { title } = this.state;
 
         return(
-           <TodoEdit 
+            <TodoEdit 
                 title={title} 
                 onDelete={this.handleDelete}
                 onSave={this.handleSave}
@@ -101,5 +117,3 @@ class TodoContainer extends PureComponent {
         return editing ? this.renderEditTodo() :  this.renderDisplayTodo();              
     }
 };
-
-export default connect(null)(TodoContainer);

@@ -9,61 +9,55 @@ class TimerContainer extends PureComponent {
         super(props);
         this.state = {
             modal: false,            
-            splitButtonOpen: false,
-            elapsed: 0,      
+            splitButtonOpen: false,  
+            correct: true, 
         };
         this.date = undefined;
-        this.time = undefined;
-        this.deadline = this.props.deadline ? new Date(this.props.deadline).getTime() : undefined;
-    }
-
-    componentDidMount() { 
- 
-        // const { deadline } = this.props;
-        // if(this.deadline && this.state.elapsed === 0) {
-            // console.log(this.props.deadline)
-            this.interval = setInterval(this.tick, 1000);
-        // };
+        this.time = undefined;       
     }
 
     toggle = () => this.setState({modal: !this.state.modal});   
 
     toggleSplit = () => this.setState({ splitButtonOpen: !this.state.splitButtonOpen, });
 
-    getDate = (elem) => this.date = elem;
+    getDate = elem => this.date = elem;
 
-    getTime = (elem) => this.time = elem;
+    getTime = elem => this.time = elem;
 
     focusDate = () => this.date.focus();
 
     focusTime = () => this.time.focus();
 
-    tick = () => {
-        const now = Date.now();
-        const deadline = new Date(this.props.deadline).getTime();
-        const diff = deadline - now; 
-        // console.log(diff)
-        if(diff > 0) {
-            this.setState({ 
-                elapsed: diff,           
-            });
-        } else {
-            this.setState({ 
-                elapsed: null,           
-            });
-        };
+    timerEdit = deadline => {
+        const { id, project_id, onSetTodoDeadline } = this.props;
+        onSetTodoDeadline(id, deadline, project_id);
+        this.toggle()
     }
 
     deadlineSet = (event) => {
         event.preventDefault();
-        const { id, project_id, onSetTodoDeadline } = this.props;
         const date = this.date.value;
-        const time = this.time.value        
-        const deadlineLocal = new Date(`${date} ${time}`);
-        const deadline = deadlineLocal.toISOString();
-        if (deadline !== this.props.deadline)            
-            onSetTodoDeadline(id, deadline, project_id);          
-        this.toggle();
+        const time = this.time.value;
+        if(date === '') {      
+            alert('please set valid date')
+        } else {
+            const deadlineLocal = new Date(`${date} ${time}`);        
+            const now = new Date();
+            const timeLag = now.setMinutes(now.getMinutes() + 1)
+       
+            if(deadlineLocal < timeLag) {
+                alert(' minimum deadline term shoud be one minute beyond of present time ')
+            } else {
+                const deadline = deadlineLocal.toISOString();
+                if (deadline !== this.props.deadline) 
+                    this.timerEdit(deadline);     
+            };     
+        }
+       
+    }
+
+    timerReset = () => {
+        this.timerEdit(null);
     }
 
     timeLeftFormat(milliseconds) { 
@@ -71,7 +65,8 @@ class TimerContainer extends PureComponent {
         const days = Math.floor(totalSeconds / 86400);
         const hours = Math.floor((totalSeconds % 86400) / 3600);
         const minutes = Math.floor(totalSeconds % 3600 / 60);
-        return `${days}d ${hours}h:${minutes}m`
+        const seconds = Math.floor(totalSeconds % 60);
+        return days ? ( days + 'd ' + hours + 'h:' + minutes + 'm') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
     }
 
     outputDateFormat(deadline) { 
@@ -90,19 +85,21 @@ class TimerContainer extends PureComponent {
     }
     
     render() {
-        const { deadline } = this.props;
-        const { modal, splitButtonOpen, elapsed, } = this.state;
-        const timeLeft = this.timeLeftFormat(elapsed);
+        const { deadline, timeElapsed } = this.props;
+        const { modal, splitButtonOpen, correct } = this.state;
+        const timeLeft = this.timeLeftFormat(timeElapsed);
         const outputDate = this.outputDateFormat(deadline);
         
         return (
             <Timer   
                 modal={modal}               
                 splitButtonOpen={splitButtonOpen}
-                onToggle={this.toggle}               
+                onToggle={this.toggle}  
+                correct={correct}             
                 onToggleSplit={this.toggleSplit}
                 deadline={deadline}                
                 onDeadlineSet={this.deadlineSet}
+                onTimerReset={this.timerReset}
                 onGetDate={this.getDate}
                 onGetTime={this.getTime} 
                 onFocusDate={this.focusDate}  
