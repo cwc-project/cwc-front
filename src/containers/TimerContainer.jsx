@@ -10,23 +10,30 @@ class TimerContainer extends PureComponent {
         this.state = {
             modal: false,            
             splitButtonOpen: false,  
-            correct: true, 
+            date: this.userDateFormat(this.props.deadline),
+            time: this.userTimeFormat(this.props.deadline),  
+            dateInvalid: false, 
+            timeInvalid: false,
+            dateInvalidText: '',   
+            timeInvalidText: '',  
+            dateValidDecor: false,
+            timeValidDecor: false,
+            checked: false,            
         };
-        this.date = undefined;
-        this.time = undefined;       
+        this.maxDeadlineYears = 10;   
     }
 
-    toggle = () => this.setState({modal: !this.state.modal});   
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal,
+            date: this.userDateFormat(this.props.deadline),
+            time: this.userTimeFormat(this.props.deadline),
+            dateValidDecor: false,
+            timeValidDecor: false,
+        });
+    };   
 
     toggleSplit = () => this.setState({ splitButtonOpen: !this.state.splitButtonOpen, });
-
-    getDate = elem => this.date = elem;
-
-    getTime = elem => this.time = elem;
-
-    focusDate = () => this.date.focus();
-
-    focusTime = () => this.time.focus();
 
     timerEdit = deadline => {
         const { id, project_id, onSetTodoDeadline } = this.props;
@@ -34,30 +41,145 @@ class TimerContainer extends PureComponent {
         this.toggle()
     }
 
-    deadlineSet = (event) => {
-        event.preventDefault();
-        const date = this.date.value;
-        const time = this.time.value;
-        if(date === '') {      
-            alert('please set valid date')
-        } else {
-            const deadlineLocal = new Date(`${date} ${time}`);        
-            const now = new Date();
-            const timeLag = now.setMinutes(now.getMinutes() + 1)
-       
-            if(deadlineLocal < timeLag) {
-                alert(' minimum deadline term shoud be one minute beyond of present time ')
-            } else {
-                const deadline = deadlineLocal.toISOString();
-                if (deadline !== this.props.deadline) 
-                    this.timerEdit(deadline);     
-            };     
-        }
-       
+    deadlineSet = event => {
+        event.preventDefault();     
+        this.dateValidation(); 
+        const { date, time } = this.state;
+        const deadlineLocal = new Date(`${date} ${time}`);       
+        const deadline = deadlineLocal.toISOString();       
+
+        if ( !this.state.dateInvalid && !this.state.timeInvalid && this.state.checked) { 
+            this.timerEdit(deadline);  
+            this.toggle();   
+        };      
+        this.setState({ checked: false });    
+    }  
+
+    handleChange = event => {         
+        this.setState({ 
+            [event.target.name]: event.target.value, 
+            }, () => {
+                this.dateValidation(); 
+            }
+        );           
     }
+
+    dateValidation = () => {
+        const { date } = this.state;
+        const wrongFormat = 'incorrect date format';
+        const wrongPeriod = 'this date is expired';
+        const overMaximum = `deadline should not exceed ${this.maxDeadlineYears} years`;
+        if(date) {
+            const dateMs = Date.parse(date)
+            const nowMs =  Date.parse(this.userDateFormat());
+            const maxDateMs = Date.parse(this.maxDateYears(this.maxDeadlineYears));
+            // switch (true) {
+            //     case (dateMs >= nowMs) && (dateMs <= maxDateMs):
+            //         this.setState({ 
+            //             dateInvalid: false, 
+            //             dateValidDecor: true,
+            //         }); 
+            //         break;
+            //     case dateMs < nowMs:
+            //         this.setState({ 
+            //             dateInvalid: true,
+            //             dateInvalidText: wrongPeriod,
+            //         }); 
+            //         break;
+            //     case dateMs > maxDateMs:
+            //         this.setState({
+            //             dateInvalid: true,
+            //             dateInvalidText: overMaximum, 
+            //         });  
+            //         break; 
+            // };
+            dateMs < nowMs ? 
+                this.setState({
+                    dateInvalid: true,
+                    dateInvalidText: wrongPeriod,
+                })
+            : 
+                ( dateMs > maxDateMs ? 
+                    this.setState({
+                        dateInvalid: true,
+                        dateInvalidText: overMaximum,
+                    })           
+                :    
+                    this.setState({ 
+                        dateInvalid: false, 
+                        dateValidDecor: true,
+                        checked: true,
+                    }, this.timeValidation())   
+            );
+        } else {
+            this.setState({
+                dateInvalid: true,
+                dateInvalidText: wrongFormat,
+            });
+        };
+    }
+
+    timeValidation = () => {
+        const { date, time, dateInvalid } = this.state;
+        const timeLagDisplay = this.userTimeFormat(this.timeLag(2));       
+        const wrongFormat = `Please set time. For expamle: ${timeLagDisplay}`;
+        const wrongPeriod = `Please increase deadline time. It should be not less than ${timeLagDisplay}`;         
+        if(time) {
+            if(!dateInvalid) {
+                const deadlineLocal = new Date(`${date} ${time}`);
+                const timeLag = this.timeLag(1);          
+                (deadlineLocal <= timeLag) ? 
+                    this.setState({
+                        timeInvalid: true,
+                        timeInvalidText: wrongPeriod,
+                    })
+                :
+                    this.setState({ 
+                        timeInvalid: false,
+                        timeValidDecor: true,
+                    });   
+            } else {
+                this.setState({ 
+                    timeInvalid: false,
+                    timeValidDecor: true,
+                });   
+            };   
+        } else {
+            this.setState({ 
+                timeInvalid: true,
+                timeInvalidText: wrongFormat,
+            });   
+        };        
+    };
+
+    maxDateYears = (year) => {
+        const now = new Date();
+        const date = now.setFullYear(now.getFullYear() + year);
+        return this.userDateFormat(date);
+    }        
 
     timerReset = () => {
         this.timerEdit(null);
+    }
+    
+    timeLag(value) {
+        const now = new Date();
+        return now.setMinutes(now.getMinutes() + value); 
+    }
+
+    userDateFormat = date => {
+        const dateFormat = date ? new Date(date) : new Date();
+        const year = dateFormat.getFullYear();
+        const month = (dateFormat.getMonth() + 1 > 9) ? (dateFormat.getMonth() + 1)  : '0' + (dateFormat.getMonth() + 1);
+        const day = (dateFormat.getDate() > 9) ? dateFormat.getDate() : ('0' + dateFormat.getDate());
+        return `${year}-${month}-${day}`;       
+    }
+
+    userTimeFormat = date => {
+        const dateFormat = date ? new Date(date) : new Date();
+        const hours = (dateFormat.getHours() > 9) ? dateFormat.getHours() : ('0' + dateFormat.getHours());;
+        const minutes = (dateFormat.getMinutes() > 9) ? dateFormat.getMinutes()  : ('0' + dateFormat.getMinutes());
+        return `${hours}:${minutes}`;       
     }
 
     timeLeftFormat(milliseconds) { 
@@ -86,26 +208,38 @@ class TimerContainer extends PureComponent {
     
     render() {
         const { deadline, timeElapsed } = this.props;
-        const { modal, splitButtonOpen, correct } = this.state;
-        const timeLeft = this.timeLeftFormat(timeElapsed);
+        const { modal, splitButtonOpen,  dateInvalid, dateValidDecor, timeInvalid, dateInvalidText, time, date, timeValidDecor, timeInvalidText } = this.state;
+        const timeLeft = this.timeLeftFormat(timeElapsed);        
         const outputDate = this.outputDateFormat(deadline);
+        const minDate = this.userDateFormat();
+        const maxDate = this.maxDateYears(this.maxDeadlineYears);
+        // const timeLag = this.userTimeFormat(this.timeLag(2));
+        // console.log(timeLag)
+
         
         return (
-            <Timer   
+            <Timer 
                 modal={modal}               
-                splitButtonOpen={splitButtonOpen}
-                onToggle={this.toggle}  
-                correct={correct}             
-                onToggleSplit={this.toggleSplit}
-                deadline={deadline}                
-                onDeadlineSet={this.deadlineSet}
-                onTimerReset={this.timerReset}
-                onGetDate={this.getDate}
-                onGetTime={this.getTime} 
-                onFocusDate={this.focusDate}  
-                onFocusTime={this.focusTime}  
+                splitButtonOpen={splitButtonOpen}              
+                date={date}
+                time={time}
+                dateInvalid={dateInvalid}     
+                timeInvalid={timeInvalid}
+                dateValidDecor={dateValidDecor}
+                timeValidDecor={timeValidDecor}
+                dateInvalidText={dateInvalidText}
+                timeInvalidText={timeInvalidText}   
+                minDate={minDate}
+                maxDate={maxDate}
+                deadline={deadline}
                 timeLeft={timeLeft} 
                 outputDate={outputDate}
+                // timeLag={timeLag}
+                onToggle={this.toggle}
+                onToggleSplit={this.toggleSplit}
+                onChange={this.handleChange}                 
+                onDeadlineSet={this.deadlineSet}
+                onTimerReset={this.timerReset}                
             />
         );
     }

@@ -43,7 +43,7 @@
 
 @media (min-width: 576px) {
     .modal-dialog.timer-modal-form {
-        max-width: 320px;
+        max-width: 340px;
         margin: 1.75rem auto;
     }
 }
