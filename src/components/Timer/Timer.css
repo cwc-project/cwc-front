@@ -31,14 +31,23 @@
 .timer-date-input-group {
     margin-bottom: 0.5rem;
 }
-.timer-set-btn {
-    border-right: 1px solid white;
-}
 .timer-warning {
-    color: tomato;
+    color: #dc3545;
 }
 .time-left {
     font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-group > .input-group-append:not(:last-child) > .input-group-text.timer-addon {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+.timer-alert {
+    margin-left: 0.2rem;
+    width: 18px;
+    height: 18px;
 }
 
 @media (min-width: 576px) {

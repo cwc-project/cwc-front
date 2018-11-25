@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import { Clock, Calendar, Watch, Check, X } from 'react-feather';
+import { Clock, Calendar, Watch, Check, X, AlertCircle } from 'react-feather';
 import { 
     Button,
     Modal, 
@@ -31,10 +31,11 @@ export default function Timer(props) {
         minDate,
         maxDate,
         modal,
-        timeLag,
         splitButtonOpen,
+        timeElapsed,
         dateInvalid,
         timeInvalid,
+        timerWarning,
         dateInvalidText,
         timeInvalidText,
         dateValidDecor,
@@ -48,11 +49,13 @@ export default function Timer(props) {
         outputDate,       
     } = props; 
 
-    const hour = 3600000;
-    const warning = Date.parse(deadline) - Date.now() - hour;
     const timeLeftStyle = classNames('time-left', 
-        (warning < 0) ? 'timer-warning' : ''
+        timerWarning ? 'timer-warning' : ''
     );    
+    const timerSetBtn = classNames('timer-set-btn', 
+        (dateInvalid || timeInvalid) ? 'error' : ''
+    );    
+
     let dateEl;
     let timeEl;
     const onFocus = elem => elem.focus();
@@ -64,8 +67,10 @@ export default function Timer(props) {
                     className="timer-btn"
                     onClick={onToggle}
                 >
-                    <div className={timeLeftStyle}>{timeLeft}</div>
+              
+                    <div className={timeLeftStyle}> {timeLeft} {timeElapsed === 0 ? <AlertCircle className='timer-alert' /> : ''}</div>
                     <sub className="date-output">{outputDate}</sub>
+                   
                 </ButtonComponent>
             : 
                 <ButtonComponent
@@ -91,7 +96,11 @@ export default function Timer(props) {
                                 invalid={dateInvalid}
                                 valid={dateValidDecor}                 
                             />
-                            <InputGroupAddon addonType="append" onClick={() => onFocus(dateEl)}><InputGroupText><Calendar /></InputGroupText></InputGroupAddon>
+                            <InputGroupAddon addonType="append" onClick={() => onFocus(dateEl)}>
+                                <InputGroupText className="timer-addon">
+                                    <Calendar />
+                                </InputGroupText>
+                            </InputGroupAddon>
                             <FormFeedback>{dateInvalidText}</FormFeedback>
                         </InputGroup>
                         <InputGroup>
@@ -105,7 +114,11 @@ export default function Timer(props) {
                                 invalid={timeInvalid}
                                 valid={timeValidDecor}   
                             />         
-                            <InputGroupAddon addonType="append" onClick={() => onFocus(timeEl)}><InputGroupText><Watch /></InputGroupText></InputGroupAddon>
+                            <InputGroupAddon addonType="append" onClick={() => onFocus(timeEl)}>
+                                <InputGroupText className="timer-addon">
+                                    <Watch />
+                                </InputGroupText>
+                            </InputGroupAddon>
                             <FormFeedback>{timeInvalidText}</FormFeedback>
                         </InputGroup>   
                     </ModalBody>
@@ -117,7 +130,7 @@ export default function Timer(props) {
                             isOpen={splitButtonOpen} 
                             toggle={onToggleSplit}
                         >
-                            <Button color="primary" className="timer-set-btn" onClick={onDeadlineSet}><Check /> Set timer </Button>{' '}
+                            <ButtonComponent color="primary" className={timerSetBtn} onClick={onDeadlineSet}><Check /> Set timer </ButtonComponent>{' '}
                             <DropdownToggle caret color="primary" split outline />
                             <DropdownMenu>
                                 <DropdownItem header>Advanced options</DropdownItem> 

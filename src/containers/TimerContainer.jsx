@@ -17,11 +17,10 @@ class TimerContainer extends PureComponent {
             dateInvalidText: '',   
             timeInvalidText: '',  
             dateValidDecor: false,
-            timeValidDecor: false,
-            checked: false,            
+            timeValidDecor: false,   
         };
         this.maxDeadlineYears = 10;   
-    }
+    };
 
     toggle = () => {
         this.setState({
@@ -38,31 +37,31 @@ class TimerContainer extends PureComponent {
     timerEdit = deadline => {
         const { id, project_id, onSetTodoDeadline } = this.props;
         onSetTodoDeadline(id, deadline, project_id);
-        this.toggle()
-    }
+        this.toggle();
+    };
 
-    deadlineSet = event => {
-        event.preventDefault();     
-        this.dateValidation(); 
-        const { date, time } = this.state;
-        const deadlineLocal = new Date(`${date} ${time}`);       
-        const deadline = deadlineLocal.toISOString();       
-
-        if ( !this.state.dateInvalid && !this.state.timeInvalid && this.state.checked) { 
+     deadlineSet = async event => {
+        event.preventDefault();
+        await this.dateValidation(); 
+        await this.timeValidation(); 
+        const { date, time, dateInvalid, timeInvalid } = this.state;       
+        if ( !dateInvalid && !timeInvalid) { 
+            const deadlineLocal = new Date(`${date} ${time}`);       
+            const deadline = deadlineLocal.toISOString();       
             this.timerEdit(deadline);  
             this.toggle();   
-        };      
-        this.setState({ checked: false });    
-    }  
+        }; 
+    };  
 
     handleChange = event => {         
         this.setState({ 
             [event.target.name]: event.target.value, 
             }, () => {
                 this.dateValidation(); 
+                this.timeValidation();
             }
         );           
-    }
+    };
 
     dateValidation = () => {
         const { date } = this.state;
@@ -73,26 +72,7 @@ class TimerContainer extends PureComponent {
             const dateMs = Date.parse(date)
             const nowMs =  Date.parse(this.userDateFormat());
             const maxDateMs = Date.parse(this.maxDateYears(this.maxDeadlineYears));
-            // switch (true) {
-            //     case (dateMs >= nowMs) && (dateMs <= maxDateMs):
-            //         this.setState({ 
-            //             dateInvalid: false, 
-            //             dateValidDecor: true,
-            //         }); 
-            //         break;
-            //     case dateMs < nowMs:
-            //         this.setState({ 
-            //             dateInvalid: true,
-            //             dateInvalidText: wrongPeriod,
-            //         }); 
-            //         break;
-            //     case dateMs > maxDateMs:
-            //         this.setState({
-            //             dateInvalid: true,
-            //             dateInvalidText: overMaximum, 
-            //         });  
-            //         break; 
-            // };
+
             dateMs < nowMs ? 
                 this.setState({
                     dateInvalid: true,
@@ -109,7 +89,7 @@ class TimerContainer extends PureComponent {
                         dateInvalid: false, 
                         dateValidDecor: true,
                         checked: true,
-                    }, this.timeValidation())   
+                    })   
             );
         } else {
             this.setState({
@@ -117,18 +97,20 @@ class TimerContainer extends PureComponent {
                 dateInvalidText: wrongFormat,
             });
         };
-    }
+    };
 
     timeValidation = () => {
-        const { date, time, dateInvalid } = this.state;
+        const { date, time } = this.state;
         const timeLagDisplay = this.userTimeFormat(this.timeLag(2));       
         const wrongFormat = `Please set time. For expamle: ${timeLagDisplay}`;
         const wrongPeriod = `Please increase deadline time. It should be not less than ${timeLagDisplay}`;         
         if(time) {
-            if(!dateInvalid) {
+            const nowDate = this.userDateFormat(new Date());
+            if(nowDate === date) {
                 const deadlineLocal = new Date(`${date} ${time}`);
-                const timeLag = this.timeLag(1);          
-                (deadlineLocal <= timeLag) ? 
+                const timeLag = this.timeLag(1);  
+
+                deadlineLocal <= timeLag ? 
                     this.setState({
                         timeInvalid: true,
                         timeInvalidText: wrongPeriod,
@@ -152,19 +134,24 @@ class TimerContainer extends PureComponent {
         };        
     };
 
-    maxDateYears = (year) => {
+    maxDateYears = year => {
         const now = new Date();
         const date = now.setFullYear(now.getFullYear() + year);
         return this.userDateFormat(date);
-    }        
+    };        
 
     timerReset = () => {
         this.timerEdit(null);
-    }
+    };
     
     timeLag(value) {
         const now = new Date();
         return now.setMinutes(now.getMinutes() + value); 
+    };
+
+    timerWarning(deadline) {
+        const hour = 3600000;
+        return Date.parse(deadline) - Date.now() - hour < 0 ? true : false;
     }
 
     userDateFormat = date => {
@@ -173,14 +160,14 @@ class TimerContainer extends PureComponent {
         const month = (dateFormat.getMonth() + 1 > 9) ? (dateFormat.getMonth() + 1)  : '0' + (dateFormat.getMonth() + 1);
         const day = (dateFormat.getDate() > 9) ? dateFormat.getDate() : ('0' + dateFormat.getDate());
         return `${year}-${month}-${day}`;       
-    }
+    };
 
     userTimeFormat = date => {
         const dateFormat = date ? new Date(date) : new Date();
         const hours = (dateFormat.getHours() > 9) ? dateFormat.getHours() : ('0' + dateFormat.getHours());;
-        const minutes = (dateFormat.getMinutes() > 9) ? dateFormat.getMinutes()  : ('0' + dateFormat.getMinutes());
+        const minutes = (dateFormat.getMinutes() > 9) ? dateFormat.getMinutes() : ('0' + dateFormat.getMinutes());
         return `${hours}:${minutes}`;       
-    }
+    };
 
     timeLeftFormat(milliseconds) { 
         const totalSeconds = milliseconds / 1000;
@@ -189,7 +176,7 @@ class TimerContainer extends PureComponent {
         const minutes = Math.floor(totalSeconds % 3600 / 60);
         const seconds = Math.floor(totalSeconds % 60);
         return days ? ( days + 'd ' + hours + 'h:' + minutes + 'm') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
-    }
+    };
 
     outputDateFormat(deadline) { 
         const options = {
@@ -204,18 +191,17 @@ class TimerContainer extends PureComponent {
         };
         const date = new Date(deadline);
         return date.toLocaleDateString("en-US", options);
-    }
+    };
     
     render() {
+        console.log(window.innerWidth)
         const { deadline, timeElapsed } = this.props;
         const { modal, splitButtonOpen,  dateInvalid, dateValidDecor, timeInvalid, dateInvalidText, time, date, timeValidDecor, timeInvalidText } = this.state;
         const timeLeft = this.timeLeftFormat(timeElapsed);        
         const outputDate = this.outputDateFormat(deadline);
         const minDate = this.userDateFormat();
         const maxDate = this.maxDateYears(this.maxDeadlineYears);
-        // const timeLag = this.userTimeFormat(this.timeLag(2));
-        // console.log(timeLag)
-
+        const timerWarning = this.timerWarning(deadline);
         
         return (
             <Timer 
@@ -232,9 +218,10 @@ class TimerContainer extends PureComponent {
                 minDate={minDate}
                 maxDate={maxDate}
                 deadline={deadline}
+                timeElapsed={timeElapsed}
                 timeLeft={timeLeft} 
                 outputDate={outputDate}
-                // timeLag={timeLag}
+                timerWarning={timerWarning}
                 onToggle={this.toggle}
                 onToggleSplit={this.toggleSplit}
                 onChange={this.handleChange}                 
@@ -242,7 +229,7 @@ class TimerContainer extends PureComponent {
                 onTimerReset={this.timerReset}                
             />
         );
-    }
+    };
 };
 
 function mapDispatchToProps(dispatch) {

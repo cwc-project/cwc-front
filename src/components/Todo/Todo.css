@@ -31,17 +31,6 @@
 .overdue-task * {
     color: #dc3545;
 }
-.overdue-task::after {
-    content: '!overdue';
-    position: absolute;
-    top: -0.25rem;
-    left: 0.1rem;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #dc3545;
-    text-decoration: underline;
-}
-
 
 /* адаптивность */
 @media screen and (max-width:479px) {

@@ -30,7 +30,7 @@ export default class TodoContainer extends PureComponent {
         };
     }
 
-    elapsedTimeCounter = (deadline) => {
+    elapsedTimeCounter = deadline => {
         const now = Date.now();                      
         const diff = deadline - now;                              
         if(diff > 0) {
@@ -42,10 +42,10 @@ export default class TodoContainer extends PureComponent {
     }
 
     tick = () => {   
-        const start = Date.now();     
-        const deadline  = new Date(this.props.deadline).getTime();  
-        if(deadline > start) {
-            this.elapsedTimeCounter(deadline);
+        // const start = Date.now();     
+        const deadline  = new Date(this.props.deadline).getTime(); 
+        this.elapsedTimeCounter(deadline);
+        if(this.state.timeElapsed > 0) {
             this.interval = setInterval(() => { 
                 console.log('tick'); // доп инфа
                 this.elapsedTimeCounter(deadline);  
