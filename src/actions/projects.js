@@ -1,14 +1,12 @@
 export const GET_PROJECTS = 'GET_PROJECTS';
 export const EDIT_PROJECT_TITLE = 'EDIT_PROJECT_TITLE';
-export const PICK_PROJECT = 'PICK_PROJECT';
-export let project_id = null;
 
-export function getProjects() { 
+export function getProjects(user_id) { 
     return {
         type: GET_PROJECTS,
         request: {
             method: 'get',
-            url: '/projects',//пока будет использовать только один проект
+            url: `/projects/?user_id=${user_id}`,
         },
     };
 };
@@ -22,11 +20,3 @@ export function editProjectTitle(id, title) {
         },
     };
 };
-
-// export function pickProject(projects, index) {
-//     return {
-//         type: PICK_PROJECT,
-//         projects,
-//         index,
-//     };
-// };

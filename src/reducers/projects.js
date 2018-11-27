@@ -11,11 +11,11 @@ function projectReducer(state = {}, action) {
     };
 };
 
-export default function reducer(state={}, action) {
+export default function reducer(state=[], action) {
     switch(action.type) {
 
         case GET_PROJECTS: 
-            return action.data; //пока работаем только с первым project в массиве     
+            return action.data; 
 
         case EDIT_PROJECT_TITLE:    
             return projectReducer(action.data, action);

@@ -11,10 +11,30 @@
     align-items: center;
 }
 .user-name {
-    height: 26.4px;
-    border-bottom: 0.5px dotted;
-    line-height: 1.8;
+    border-bottom: 0.8px dotted;
+    line-height: 1.6;
     color: #007bff;
+}
+.user-name:hover {
+    color: #0056b3;
+}
+.log-out {
+    outline: none;    
+}
+.log-out:hover {
+    color: #dc3545;
+}
+.log-out:active {
+    background-color: #dc3545;
+    color: #fff;
+}
+.log-out-ico {
+    width: 20px;
+    height: 20px;
+}
+.log-in {
+    text-decoration: none;
+    color: rgb(33, 37, 41);
 }
 
 /* адаптивность */

@@ -1,6 +1,7 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Fragment } from 'react';
+import { Route, Link, NavLink } from 'react-router-dom';
 
 import { Container, Card, CardBody } from 'reactstrap';
 
@@ -8,16 +9,20 @@ import ProjectContainer from 'containers/ProjectContainer'
 import Heading from 'containers/HeadingContainer';
 import AddTodoForm from 'containers/AddTodoFormContainer';
 import TodoList from 'containers/TodoListContainer';
-import Header from 'components/Header';
+import Header from 'containers/HeaderContainer';
 import Footer from 'components/Footer';
+import Greeting from 'containers/GreetingContainer';
+import Projects from 'containers/ProjectsContainer';
 
 
 export default function App(props) {
-    const { project_id } = props;
+    // const { project_id } = props;
     return (
         <Fragment>
             <Header />
-            <ProjectContainer> 
+            <Route exact path='/' component={Greeting}  />
+            <Route path='/projects' component={Projects} />
+            {/* <ProjectContainer> 
                 <div className="project">        
                     <Container>
                         <Card>
@@ -29,7 +34,7 @@ export default function App(props) {
                         </Card>
                     </Container>
                 </div>
-            </ProjectContainer>
+            </ProjectContainer> */}
             <Footer />
         </Fragment>
     );

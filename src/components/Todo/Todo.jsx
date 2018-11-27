@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 import { ListGroupItem, ListGroupItemHeading } from 'reactstrap';
 import { CheckSquare, Square, Edit2 } from 'react-feather';
-
 import Timer from 'containers/TimerContainer';
 import ButtonComponent from 'components/ButtonComponent';
 
