@@ -61,4 +61,7 @@
         background-color: #efefef;
         border-color: #e9e8e8;
     }
+    .edit-btn {
+        display: none;
+    }
 }

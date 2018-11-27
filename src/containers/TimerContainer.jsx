@@ -170,35 +170,36 @@ class TimerContainer extends PureComponent {
     };
 
     timeLeftFormat(milliseconds) { 
+        let resp =  window.innerWidth;
+        window.addEventListener('resize', () => {
+            
+            resp = window.innerWidth
+            console.log(resp)
+        });
+        const respa = resp > 479;
         const totalSeconds = milliseconds / 1000;
         const days = Math.floor(totalSeconds / 86400);
         const hours = Math.floor((totalSeconds % 86400) / 3600);
         const minutes = Math.floor(totalSeconds % 3600 / 60);
         const seconds = Math.floor(totalSeconds % 60);
-        return days ? ( days + 'd ' + hours + 'h:' + minutes + 'm') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
-    };
-
-    outputDateFormat(deadline) { 
-        const options = {
-            year: "numeric",
-            month: "short",
-            weekday: "short",  
-            day: "numeric", 
-            hour: "2-digit",
-            hour12: false,
-            minute: "2-digit",
-            timezone: 'UTC',            
-        };
-        const date = new Date(deadline);
-        return date.toLocaleDateString("en-US", options);
+        debugger
+        if(respa) {
+            return days ? ( days + 'd ' + hours + 'h:' + minutes + 'm') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
+        } else {
+            return days ? ( days + 'd ' + hours + 'h') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
+        }
+           
     };
     
     render() {
+
+        const resp = window.innerWidth > 479;
         console.log(window.innerWidth)
-        const { deadline, timeElapsed } = this.props;
+        console.log(resp)
+        const { deadline, timeElapsed, outputDate } = this.props;
         const { modal, splitButtonOpen,  dateInvalid, dateValidDecor, timeInvalid, dateInvalidText, time, date, timeValidDecor, timeInvalidText } = this.state;
-        const timeLeft = this.timeLeftFormat(timeElapsed);        
-        const outputDate = this.outputDateFormat(deadline);
+        // const timeLeft = this.timeLeftFormat(timeElapsed);     
+        const timeLeft = this.timeLeftFormat(486460000);      
         const minDate = this.userDateFormat();
         const maxDate = this.maxDateYears(this.maxDeadlineYears);
         const timerWarning = this.timerWarning(deadline);

@@ -53,6 +53,21 @@ export default class TodoContainer extends PureComponent {
         };       
     }
 
+    outputDateFormat(deadline) { 
+        const options = {
+            year: "numeric",
+            month: "short",
+            weekday: "short",  
+            day: "numeric", 
+            hour: "2-digit",
+            hour12: false,
+            minute: "2-digit",
+            timezone: 'UTC',            
+        };
+        const date = new Date(deadline);
+        return date.toLocaleDateString("en-US", options);
+    };
+
     handleChange = (event) => { 
         this.setState({ title: event.target.value, })
     }
@@ -84,6 +99,7 @@ export default class TodoContainer extends PureComponent {
     renderDisplayTodo() {
         const { id, title, completed, deadline, project_id } = this.props;
         const { timeElapsed } = this.state;
+        const outputDate = this.outputDateFormat(deadline);
 
         return (
             <Todo 
@@ -91,10 +107,11 @@ export default class TodoContainer extends PureComponent {
                 title={title}
                 completed={completed}
                 deadline={deadline}
-                onCheck={this.handleCheck}
-                onEdit={this.handleEdit}
                 project_id={project_id}
                 timeElapsed={timeElapsed}
+                outputDate={outputDate}
+                onCheck={this.handleCheck}
+                onEdit={this.handleEdit}
             />
         );
     }

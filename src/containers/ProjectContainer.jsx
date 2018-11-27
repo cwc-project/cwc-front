@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { getProjects } from '../actions';
+import { project_id, pickProject, getProjects } from '../actions';
 
 class ProjectContainer extends PureComponent {
     constructor(props) {
@@ -10,16 +10,18 @@ class ProjectContainer extends PureComponent {
 
     componentDidMount() {
         const { onGetProjects } = this.props;
-        onGetProjects();
+        
+        onGetProjects()
+        .then(() => pickProject(this.props.projects, 0));
     }
     
     render() {     
-        const { project_id } = this.props;
+        console.log(project_id)
         return (  
-            project_id ? 
+            // project_id ? 
                 this.props.children 
-            : 
-                <div className="loading-project">...loading project</div>
+            // : 
+            //     <div className="loading-project">...loading project</div>
             
         );
     }
@@ -27,13 +29,13 @@ class ProjectContainer extends PureComponent {
 
 function mapStateToProps(state) {
     return {
-        project_id: state.project.id,
+        projects: state.projects,
     };
 };
 
 function mapDipsatchToProps(dispatch) {
     return {
-        onGetProjects: () => dispatch(getProjects()),        
+        onGetProjects: () => dispatch(getProjects()), 
     };
 };
 

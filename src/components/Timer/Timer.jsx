@@ -68,7 +68,10 @@ export default function Timer(props) {
                     onClick={onToggle}
                 >
               
-                    <div className={timeLeftStyle}> {timeLeft} {timeElapsed === 0 ? <AlertCircle className='timer-alert' /> : ''}</div>
+                    <div className={timeLeftStyle}> 
+                        {timeLeft} 
+                        {/* {timeElapsed === 0 ? <AlertCircle className='timer-alert' /> : ''} */}
+                    </div>
                     <sub className="date-output">{outputDate}</sub>
                    
                 </ButtonComponent>

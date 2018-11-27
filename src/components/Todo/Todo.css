@@ -1,5 +1,6 @@
 /* reactstrap */
-.todo.list-group-item {
+/* .todo.list-group-item { */
+.todo-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,16 +27,26 @@
 }
 .todo-right-side {
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
 }
 .overdue-task * {
     color: #dc3545;
 }
+.output-mobile {
+    font-size: 0.7rem;
+    text-align: center;
+    margin-top: -0.3rem;
+    line-height: 1;
+}
 
 /* адаптивность */
-@media screen and (max-width:479px) {
-    .todo-right-side {
-        flex-direction: column-reverse;
+@media screen and (min-width:479px) {
+    .output-mobile {
+        font-size: 0.7rem;
+        text-align: center;
+        margin-top: -0.3rem;
+        line-height: 1;
+        display: none;
     }
 }
 @media screen and (max-width:376px) {

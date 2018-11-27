@@ -11,8 +11,8 @@ class TodoListContainer extends PureComponent {
     }
 
     componentDidMount() {
-        const { onGetTodos, project_id } = this.props;
-        onGetTodos(project_id);
+        const { onGetTodos } = this.props;
+        onGetTodos();
     }
     
     render() {

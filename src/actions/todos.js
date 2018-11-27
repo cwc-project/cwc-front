@@ -5,7 +5,10 @@ export const CHECK_TODO = 'CHECK_TODO';
 export const EDIT_TODO_TITLE = 'EDIT_TODO_TITLE';
 export const SET_TODO_DEADLINE = 'SET_TODO_DEADLINE';
 
-export function getTodos(project_id) { 
+import { project_id } from './index';
+
+export function getTodos() { 
+    console.log(project_id)
     return {
         type: GET_TODOS,
         request: {
@@ -15,7 +18,7 @@ export function getTodos(project_id) {
     };
 };
 
-export function addTodo(title, project_id) { 
+export function addTodo(title) { 
     return {
         type: ADD_TODO,
         request: {
@@ -25,7 +28,7 @@ export function addTodo(title, project_id) {
     };
 };
 
-export function checkTodo(id, completed, project_id) {
+export function checkTodo(id, completed) {
     return {        
         type: CHECK_TODO,
         request: {            
@@ -35,7 +38,7 @@ export function checkTodo(id, completed, project_id) {
     };
 };
 
-export function deleteTodo(id, project_id) { 
+export function deleteTodo(id) { 
     return {
         type: DELETE_TODO,
         request: {
@@ -45,7 +48,7 @@ export function deleteTodo(id, project_id) {
     };
 };
 
-export function editTodoTitle(id, title, project_id) { 
+export function editTodoTitle(id, title) { 
     return {
         type: EDIT_TODO_TITLE,
         request: {
@@ -55,7 +58,7 @@ export function editTodoTitle(id, title, project_id) {
     };
 };
 
-export function setTodoDeadline(id, deadline, project_id) {
+export function setTodoDeadline(id, deadline) {
     return {
         type: SET_TODO_DEADLINE,
         request: {

@@ -1,5 +1,7 @@
-export const GET_PROJECTS = 'GET_PROJECTS';;
+export const GET_PROJECTS = 'GET_PROJECTS';
 export const EDIT_PROJECT_TITLE = 'EDIT_PROJECT_TITLE';
+export const PICK_PROJECT = 'PICK_PROJECT';
+export let project_id = null;
 
 export function getProjects() { 
     return {
@@ -20,3 +22,11 @@ export function editProjectTitle(id, title) {
         },
     };
 };
+
+// export function pickProject(projects, index) {
+//     return {
+//         type: PICK_PROJECT,
+//         projects,
+//         index,
+//     };
+// };

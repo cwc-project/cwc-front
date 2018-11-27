@@ -37,6 +37,7 @@
 .time-left {
     font-weight: 500;
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
 }
@@ -45,11 +46,20 @@
     border-bottom-right-radius: 0.25rem;
 }
 .timer-alert {
-    margin-left: 0.2rem;
+    margin-right: 0.3rem;
     width: 18px;
     height: 18px;
 }
 
+@media screen and (max-width:479px) {
+    .date-output {
+        display: none;
+    }
+    .time-left {
+        /* font-size: 1.2rem; */
+        letter-spacing: 0.5px;
+    }
+}
 @media (min-width: 576px) {
     .modal-dialog.timer-modal-form {
         max-width: 340px;
