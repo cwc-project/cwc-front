@@ -1,14 +1,12 @@
 import './Header.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { LogIn, LogOut } from 'react-feather';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import ButtonComponent from 'components/ButtonComponent';
 
-export default function Header (props) {
-  
-    const { dropdownOpen, user, onToggle, onGetUser, onClearSessionStorage, pushing } = props;
+export default function Header(props) {  
+    const { dropdownOpen, user, onToggle, onLog, onClearSessionStorage } = props;
 
     return (
         <div className="header border-bottom shadow-sm">
@@ -30,10 +28,9 @@ export default function Header (props) {
                         </Dropdown>    
                
                     : 
-                        <div><Link to="/projects" className="log-in" onClick={onGetUser}>Log in&nbsp;<LogIn /></Link></div>
+                        <div><a className="log-in" onClick={onLog}>Log in&nbsp;<LogIn /></a></div>
                     }
                 </ButtonComponent>
-                {/* <button onClick={pushing}>push new location</button> */}
             </div>
         </div>
     );

@@ -18,28 +18,29 @@ class HeaderContainer extends PureComponent {
         sessionStorage.clear();
     };
 
-    pushing = () => {
-        console.log(this.props.history)
-        // this.props.history.push('/projects');
-    }
+    handleLog = () => {
+        const { history, onGetUser } = this.props;
+        onGetUser()
+        .then(() => {    
+            if(this.props.user.id)
+                history.push('/projects');
+        }); 
+    };
 
     render() {
         const { dropdownOpen } = this.state;
-        const { user, onGetUser } = this.props;
+        const { user } = this.props;
 
         return(
             <Header
                 dropdownOpen={dropdownOpen}
                 user={user}
                 onToggle={this.toggle}
-                pushing={this.pushing}
-                onGetUser={onGetUser}
+                onLog={this.handleLog}
                 onClearSessionStorage={this.clearSessionStorage}
-
             />
         );
     };
-
 };
 
 function mapStateToProps(state) {

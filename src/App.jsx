@@ -22,7 +22,8 @@ export default function App(props) {
             <Header />
             <Route exact path='/' component={Greeting}  />
             <Route path='/projects' component={Projects} />
-            {/* <ProjectContainer> 
+            {/* <Route path='/projects:index' component=/> */}
+            <ProjectContainer> 
                 <div className="project">        
                     <Container>
                         <Card>
@@ -34,7 +35,7 @@ export default function App(props) {
                         </Card>
                     </Container>
                 </div>
-            </ProjectContainer> */}
+            </ProjectContainer>
             <Footer />
         </Fragment>
     );

@@ -7,3 +7,8 @@
 .geeting {
     text-align: center;
 }
+.loading-user {
+    text-align: center;
+    color: gray;
+    font-style: italic;
+}

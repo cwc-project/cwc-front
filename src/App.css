@@ -19,6 +19,11 @@
     z-index: 1;
 }
 
+a:not([href]):not([tabindex]) {
+    color: #007bff!important;
+    cursor: pointer;
+}
+
 /* перенести в project */
 .loading-project {
     justify-content: center;
