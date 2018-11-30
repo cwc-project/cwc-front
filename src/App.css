@@ -1,14 +1,4 @@
-/* body {
-    color: rgb(76, 76, 76)!important;
-} */
 
-.project {
-    max-width: 650px;
-    margin: auto;
-}
-.project-title {
-    cursor: pointer;
-}
 /* reactstrap */
 .card-body {
     border-top-left-radius: 0.25rem;
@@ -22,12 +12,4 @@
 a:not([href]):not([tabindex]) {
     color: #007bff!important;
     cursor: pointer;
-}
-
-/* перенести в project */
-.loading-project {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    height: 200px;
 }

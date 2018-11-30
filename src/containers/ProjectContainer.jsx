@@ -1,30 +1,24 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import Project from 'components/Project';
 
 import { project_id, pickProject, getProjects } from '../actions';
 
 class ProjectContainer extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-        const { onGetProjects } = this.props;
-        
-        onGetProjects()
-        .then(() => pickProject(this.props.projects, 0));
+    pickProject = () => {
+        const { match, projects } = this.props;
+        const idx = match.params.projectId - 1;
+        return projects[idx];    
     }
     
     render() {     
-        console.log(project_id)
+        const project = this.pickProject();
         return (  
-            // project_id ? 
-                this.props.children 
-            // : 
-            //     <div className="loading-project">...loading project</div>
-            
+            <Project 
+                project={project}            
+            />              
         );
-    }
+    };
 };
 
 function mapStateToProps(state) {
@@ -33,10 +27,5 @@ function mapStateToProps(state) {
     };
 };
 
-function mapDipsatchToProps(dispatch) {
-    return {
-        onGetProjects: () => dispatch(getProjects()), 
-    };
-};
 
-export default connect(mapStateToProps, mapDipsatchToProps)(ProjectContainer);
+export default connect(mapStateToProps)(ProjectContainer);

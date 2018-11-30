@@ -1,0 +1,14 @@
+
+.loading-project {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 200px;
+}
+.project {
+    max-width: 650px;
+    margin: auto;
+}
+.project-title {
+    cursor: pointer;
+}

@@ -11,7 +11,8 @@ export function getProjects(user_id) {
     };
 };
 
-export function editProjectTitle(id, title) {   
+export function editProjectTitle(id, title) { 
+
     return {        
         type: EDIT_PROJECT_TITLE,
         request: {

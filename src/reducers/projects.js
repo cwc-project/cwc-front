@@ -18,7 +18,7 @@ export default function reducer(state=[], action) {
             return action.data; 
 
         case EDIT_PROJECT_TITLE:    
-            return projectReducer(action.data, action);
+            return state.map(todo => projectReducer(todo, action));
 
         default:
             return state;

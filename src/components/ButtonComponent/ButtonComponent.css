@@ -50,6 +50,10 @@
 .btn-primary:not(:disabled):not(.disabled):active:focus.timer-set-btn.error {
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.6);
 }
+.choose-project-btn {
+    padding: 0.3rem 0.75rem;
+    border: 1px solid #ced4da;
+}
 /* .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus */
 
 /* адаптивность */

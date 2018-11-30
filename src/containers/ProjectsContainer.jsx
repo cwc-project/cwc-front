@@ -7,35 +7,39 @@ import Projects from 'components/Projects';
 
 class ProjectsContainer extends PureComponent {
     constructor(props) {
-        super(props);    
+        super(props);
         this.state = {
-            projectId: this.props.projects[0],
-        };    
+            value: '',
+        };
     };
 
     componentDidMount() {
-        const { projects, user_id, onGetProjects } = this.props;        
-        onGetProjects(user_id)
-        .then(() => {
-            projects[0] ? console.log('there are projects') : console.log('there is no project')
-        })
-        
-        // if(this.state.projectId)
-        //     this.props.history.push('/:1');
+        const { user_id, onGetProjects } = this.props;        
+        onGetProjects(user_id);
     };
 
-    handleProjectSelect = event => {
-
+    handleChange = event => {
+        this.setState({value: event.target.value});
     }
 
-
+    selectProject = event => {   
+        // console.log(event.target.elements.select.value) //можно реализовать через submit 
+        const { history, projects } = this.props;
+        const { value } = this.state;
+        const projectIdx = projects && !value ? 1 : value;
+        history.push(`/projects/${projectIdx}`);
+        event.preventDefault();
+    }
 
     render() {
-        const { projects } = this.props;
-        console.log(this.state)
+        const { projects} = this.props;
+        const { value } = this.state;
         return(
             <Projects 
                 projects={projects}
+                value={value}
+                onChange={this.handleChange}
+                onSelect={this.selectProject}
             />
         );
     };

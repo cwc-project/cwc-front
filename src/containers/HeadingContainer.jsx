@@ -13,27 +13,28 @@ class HeadingContainer extends PureComponent {
             modal: false,
         };  
         this.input = undefined;
-    }
+    };
+
 
     getInput = (elem) => {
         this.input = elem;
-    }
+    };
 
     componentDidUpdate() {
         const { modal } = this.state;
         if(modal && this.input) this.input.focus(); 
-    }
+    };
 
     toggle = () => {
         this.setState({modal: !this.state.modal});                  
-    }
+    };
 
     handleSubmit = () => {
         const title = this.input.value;
         const { onEditProjectTitle, project: {id} } = this.props;
         onEditProjectTitle(id, title);        
         this.toggle();
-    }
+    };
 
     render() {
         const { modal } = this.state;
@@ -48,12 +49,12 @@ class HeadingContainer extends PureComponent {
                 getInput={this.getInput}         
             />
         );
-    }   
+    };   
 };
 
 function mapStateToProps(state) {
     return {
-        project: state.project,
+        user_id: state.user.id,       
     };
 };
 
@@ -63,4 +64,4 @@ function mapDipsatchToProps(dispatch) {
     };
 };
 
-export default connect(mapStateToProps, mapDipsatchToProps)(HeadingContainer);
+export default withRouter(connect(mapStateToProps, mapDipsatchToProps)(HeadingContainer));
