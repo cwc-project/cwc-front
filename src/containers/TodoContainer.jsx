@@ -11,47 +11,47 @@ export default class TodoContainer extends PureComponent {
             title: this.props.title,
             timeElapsed: null, 
         };       
-    } 
+    }; 
 
     componentDidMount() {  
-        if(this.props.deadline) {       
+        const { completed } = this.props; 
+        if(this.props.deadline && !completed) {       
             this.tick();
         };
-    }
+    };
 
     componentWillUnmount() {
         clearInterval(this.interval);  
-    }
+    };
 
     componentDidUpdate(prevProps) {        
-        if (this.props.deadline !== prevProps.deadline) {  
+        if (this.props.deadline !== prevProps.deadline ) {  
             clearInterval(this.interval);         
             this.tick();
         };
-    }
+    };
 
     elapsedTimeCounter = deadline => {
         const now = Date.now();                      
-        const diff = deadline - now;                              
+        const diff = deadline - now;                          
         if(diff > 0) {
             this.setState({ timeElapsed: diff, });
         } else {
             this.setState({ timeElapsed: 0, });
             clearInterval(this.interval);
         };       
-    }
+    };
 
-    tick = () => {   
-        // const start = Date.now();     
+    tick = async () => {   
         const deadline  = new Date(this.props.deadline).getTime(); 
-        this.elapsedTimeCounter(deadline);
+        await this.elapsedTimeCounter(deadline);
         if(this.state.timeElapsed > 0) {
             this.interval = setInterval(() => { 
-                console.log('tick'); // доп инфа
+                console.log('tick'); // доп инфа для контроля
                 this.elapsedTimeCounter(deadline);  
             }, 1000);
-        };       
-    }
+        };
+    };
 
     outputDateFormat(deadline) { 
         const options = {
@@ -70,34 +70,37 @@ export default class TodoContainer extends PureComponent {
 
     handleChange = (event) => { 
         this.setState({ title: event.target.value, })
-    }
+    };
     
     handleCheck = () => {
-        const { id, onCheck, project_id } = this.props;   
-        const completed = !this.props.completed;        
-        onCheck(id, completed, project_id);
-    }
+        const { id, onCheck} = this.props;   
+        const completed = !this.props.completed;
+        const now = new Date();
+        const deadline = completed ? now.toISOString() : null;
+        completed ? clearInterval(this.interval) : this.tick();        
+        onCheck(id, completed, deadline);
+    };
 
     handleEdit = () => {        
         this.setState({ editing: true, })
-    }
+    };
 
     handleDelete = (event) => {
         event.preventDefault();
-        const { id, onDelete, project_id} = this.props;
-        onDelete(id, project_id);
-    }    
+        const { id, onDelete} = this.props;
+        onDelete(id);
+    };  
 
     handleSave = (event) => {
         event.preventDefault();    
-        const { id, onTodoTitleEdit, project_id } = this.props;
+        const { id, onTodoTitleEdit } = this.props;
         const { title } = this.state;
-        onTodoTitleEdit(id, title, project_id);
+        onTodoTitleEdit(id, title);
         this.setState({ editing: false, });      
-    }
+    };
 
     renderDisplayTodo() {
-        const { id, title, completed, deadline, project_id } = this.props;
+        const { id, title, completed, deadline } = this.props;
         const { timeElapsed } = this.state;
         const outputDate = this.outputDateFormat(deadline);
 
@@ -106,8 +109,7 @@ export default class TodoContainer extends PureComponent {
                 id={id}
                 title={title}
                 completed={completed}
-                deadline={deadline}
-                project_id={project_id}
+                deadline={deadline}       
                 timeElapsed={timeElapsed}
                 outputDate={outputDate}
                 onCheck={this.handleCheck}
@@ -132,5 +134,5 @@ export default class TodoContainer extends PureComponent {
     render() {
         const { editing } = this.state;
         return editing ? this.renderEditTodo() :  this.renderDisplayTodo();              
-    }
+    };
 };

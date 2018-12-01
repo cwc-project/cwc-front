@@ -5,10 +5,7 @@ export const CHECK_TODO = 'CHECK_TODO';
 export const EDIT_TODO_TITLE = 'EDIT_TODO_TITLE';
 export const SET_TODO_DEADLINE = 'SET_TODO_DEADLINE';
 
-import { project_id } from './index';
-
-export function getTodos() { 
-    console.log(project_id)
+export function getTodos(project_id) { 
     return {
         type: GET_TODOS,
         request: {
@@ -18,22 +15,22 @@ export function getTodos() {
     };
 };
 
-export function addTodo(title) { 
+export function addTodo(title, project_id, user_id) { 
     return {
         type: ADD_TODO,
         request: {
             method: 'post',
-            url: `/tasks/?project_id=${project_id}&title=${title}`,
+            url: `/tasks/?project_id=${project_id}&title=${title}&user_id=${user_id}`,
         },
     };
 };
 
-export function checkTodo(id, completed) {
+export function checkTodo(id, completed, deadline) {
     return {        
         type: CHECK_TODO,
         request: {            
             method: 'put',
-            url: `/tasks/${id}/?project_id=${project_id}&completed=${completed}`,
+            url: `/tasks/${id}/?completed=${completed}&deadline=${deadline}`,
         },
     };
 };
@@ -43,7 +40,7 @@ export function deleteTodo(id) {
         type: DELETE_TODO,
         request: {
             method: 'delete',
-            url: `/tasks/${id}/?project_id=${project_id}`,  
+            url: `/tasks/${id}`,  
         },
     };
 };
@@ -53,7 +50,7 @@ export function editTodoTitle(id, title) {
         type: EDIT_TODO_TITLE,
         request: {
             method: 'put',
-            url: `/tasks/${id}/?project_id=${project_id}&title=${title}`,
+            url: `/tasks/${id}/?title=${title}`,
         },
     };
 };
@@ -63,7 +60,7 @@ export function setTodoDeadline(id, deadline) {
         type: SET_TODO_DEADLINE,
         request: {
             method: 'put',
-            url: `/tasks/${id}/?project_id=${project_id}&deadline=${deadline}`,
+            url: `/tasks/${id}/?deadline=${deadline}`,
         },
     };
 };

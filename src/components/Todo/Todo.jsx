@@ -8,24 +8,27 @@ import { CheckSquare, Square, Edit2 } from 'react-feather';
 import Timer from 'containers/TimerContainer';
 import ButtonComponent from 'components/ButtonComponent';
 
-export default function Todo(props) {    
+export default function Todo(props) {  
+    
     const { id, title, completed, deadline, project_id, timeElapsed, outputDate, onCheck, onEdit } = props;
+
     const todoCheck = classNames( 'todo',
         completed ? 'completed' : 'uncompleted',
-        !completed && timeElapsed === 0 ? 'overdue-task' : ''
+        !completed && timeElapsed === 0 && deadline ? 'overdue-task' : ''
     );
+    const outputMobile = classNames('output-mobile',
+        !deadline && 'd-none',
+    );
+    
 
-    function onClick(){
+    function onClick() {
         if (window.innerWidth < 479)
             onEdit();        
     };
 
-    // let resp =  window.innerWidth;
-    // window.addEventListener('resize', () => resp = window.innerWidth);
-
     return (
         <ListGroupItem className={todoCheck}>
-            <div className="output-mobile">{outputDate}</div>
+            <div className={outputMobile}>{outputDate}</div>
             <div className="todo-wrapper">
                 <div className="todo-left-side">
                     <ButtonComponent 
@@ -44,6 +47,7 @@ export default function Todo(props) {
                 <div className="todo-right-side">
                     <Timer 
                         id={id}
+                        completed={completed}
                         deadline={deadline} 
                         project_id={project_id} 
                         timeElapsed={timeElapsed} 
@@ -56,7 +60,6 @@ export default function Todo(props) {
                     />   
                 </div>
             </div>
-
         </ListGroupItem>
     );
 };

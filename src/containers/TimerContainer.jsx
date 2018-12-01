@@ -47,9 +47,8 @@ class TimerContainer extends PureComponent {
         const { date, time, dateInvalid, timeInvalid } = this.state;       
         if ( !dateInvalid && !timeInvalid) { 
             const deadlineLocal = new Date(`${date} ${time}`);       
-            const deadline = deadlineLocal.toISOString();       
-            this.timerEdit(deadline);  
-            this.toggle();   
+            const deadline = deadlineLocal.toISOString();   
+            this.timerEdit(deadline);    
         }; 
     };  
 
@@ -182,7 +181,6 @@ class TimerContainer extends PureComponent {
         const hours = Math.floor((totalSeconds % 86400) / 3600);
         const minutes = Math.floor(totalSeconds % 3600 / 60);
         const seconds = Math.floor(totalSeconds % 60);
-        debugger
         if(respa) {
             return days ? ( days + 'd ' + hours + 'h:' + minutes + 'm') : (hours ? hours + 'h:' + minutes + 'm' :  minutes + ':' + (seconds > 9 ? seconds : '0' + seconds));
         } else {
@@ -193,13 +191,10 @@ class TimerContainer extends PureComponent {
     
     render() {
 
-        const resp = window.innerWidth > 479;
-        console.log(window.innerWidth)
-        console.log(resp)
-        const { deadline, timeElapsed, outputDate } = this.props;
+        // const resp = window.innerWidth > 479;
+        const { completed, deadline, timeElapsed, outputDate } = this.props;
         const { modal, splitButtonOpen,  dateInvalid, dateValidDecor, timeInvalid, dateInvalidText, time, date, timeValidDecor, timeInvalidText } = this.state;
-        // const timeLeft = this.timeLeftFormat(timeElapsed);     
-        const timeLeft = this.timeLeftFormat(486460000);      
+        const timeLeft = this.timeLeftFormat(timeElapsed);     
         const minDate = this.userDateFormat();
         const maxDate = this.maxDateYears(this.maxDeadlineYears);
         const timerWarning = this.timerWarning(deadline);
@@ -215,7 +210,8 @@ class TimerContainer extends PureComponent {
                 dateValidDecor={dateValidDecor}
                 timeValidDecor={timeValidDecor}
                 dateInvalidText={dateInvalidText}
-                timeInvalidText={timeInvalidText}   
+                timeInvalidText={timeInvalidText}  
+                completed={completed} 
                 minDate={minDate}
                 maxDate={maxDate}
                 deadline={deadline}

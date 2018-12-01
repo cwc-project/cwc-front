@@ -9,7 +9,8 @@ function todoReducer(state = {}, action) {
             }            
         return action.data;
        
-        case EDIT_TODO_TITLE:   
+        case EDIT_TODO_TITLE:
+ 
             if(state.id !== action.data.id) {
                 return state;
             }            

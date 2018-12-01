@@ -27,6 +27,7 @@ export default function Timer(props) {
     const { 
         date,
         time,
+        completed,
         onChange,
         minDate,
         maxDate,
@@ -49,12 +50,16 @@ export default function Timer(props) {
         outputDate,       
     } = props; 
 
-    const timeLeftStyle = classNames('time-left', 
-        timerWarning ? 'timer-warning' : ''
+    const timeLeftStyle = classNames('time-left',  
+        timerWarning ? 'timer-warning' : '',
+        completed ? 'd-none' : '',
     );    
     const timerSetBtn = classNames('timer-set-btn', 
-        (dateInvalid || timeInvalid) ? 'error' : ''
-    );    
+        (dateInvalid || timeInvalid) ? 'error' : '',
+    );   
+    const ouputDateStyle = classNames('date-output', 
+        completed ? 'completed' : '',
+    );     
 
     let dateEl;
     let timeEl;
@@ -66,20 +71,21 @@ export default function Timer(props) {
                 <ButtonComponent 
                     className="timer-btn"
                     onClick={onToggle}
-                >
-              
+                    disabled={completed}
+                >              
                     <div className={timeLeftStyle}> 
                         {timeLeft} 
-                        {/* {timeElapsed === 0 ? <AlertCircle className='timer-alert' /> : ''} */}
+                        {timeElapsed === 0 ? <AlertCircle className='timer-alert' /> : ''}
                     </div>
-                    <sub className="date-output">{outputDate}</sub>
+                    <sub className={ouputDateStyle}>{outputDate}</sub>
                    
                 </ButtonComponent>
             : 
                 <ButtonComponent
                     className="timer"
                     icon={<Clock />}
-                    onClick={onToggle}       
+                    onClick={onToggle} 
+                    // disabled={completed}      
                 />  
             }     
             <Modal isOpen={modal} fade={false} className="timer-modal-form">

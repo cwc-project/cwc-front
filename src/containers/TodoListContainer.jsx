@@ -9,33 +9,41 @@ import TodoList from 'components/TodoList';
 class TodoListContainer extends PureComponent {
     constructor(props) {
         super(props);
-    }
+    };
 
     componentDidMount() {
-        const { onGetTodos } = this.props;
-        onGetTodos();
+        this.getTodo();
+    };
+
+    componentDidUpdate(prevProps) {       
+        const { match: { params: { projectId } } } = this.props;
+        const prevProjectId = prevProps.match.params.projectId;
+        if (prevProjectId !== projectId) 
+            this.getTodo();              
+    };
+
+    getTodo = () => {
+        const { project: {id}, onGetTodos } = this.props;
+        onGetTodos(id);
     }
     
     render() {
-        const { todos, loading, onDelete, onCheck, onTodoTitleEdit, project_id } = this.props;
+        const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
 
         return(
             <TodoList 
                 todos={todos}
                 loading={loading}  
-                project_id={project_id}
                 onDelete={onDelete}  
                 onCheck={onCheck}
                 onTodoTitleEdit={onTodoTitleEdit}            
-            />
-     
+            />     
         );
-    }
+    };
 };
 
 function mapStateToProps(state) {
     return {
-        project_id: state.project.id,
         todos: state.todos,
         loading: state.loading.todos,
     };
@@ -45,9 +53,9 @@ function mapDispatchToProps(dispatch) {
     return {
         onGetTodos: project_id => dispatch(getTodos(project_id)),
         onDelete: id => dispatch(deleteTodo(id)),
-        onCheck: (id, complete, project_id) => dispatch(checkTodo(id, complete, project_id)),
-        onTodoTitleEdit: (id, title, project_id) => dispatch(editTodoTitle(id, title, project_id)),
+        onCheck: (id, complete, deadline) => dispatch(checkTodo(id, complete, deadline)),
+        onTodoTitleEdit: (id, title) => dispatch(editTodoTitle(id, title)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TodoListContainer));

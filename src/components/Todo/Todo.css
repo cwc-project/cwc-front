@@ -1,5 +1,5 @@
 /* reactstrap */
-/* .todo.list-group-item { */
+
 .todo-wrapper {
     display: flex;
     justify-content: space-between;
@@ -12,22 +12,20 @@
 /* todo */
 .todo.completed * {
     color: rgb(213, 213, 213);
+    text-decoration: line-through;
     transition: color .2s;
 }
 .todo-title.list-group-item-heading{
     margin-bottom: 0;
     word-break: break-word;
 }
-.todo.completed .todo-title {
-    text-decoration: line-through;
-}
+
 .todo-left-side {
     align-items: center;
     display: flex;
 }
 .todo-right-side {
     display: flex;
-    /* justify-content: flex-end; */
 }
 .overdue-task * {
     color: #dc3545;

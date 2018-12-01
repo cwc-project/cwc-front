@@ -24,7 +24,7 @@ export default function AddTodoForm(props) {
                     value={title}  
                     onChange={onChange}
                     innerRef={elem => autoSize(elem)}
-                    placeholder='Новая задача' 
+                    placeholder='New task' 
                     autoFocus
                  />
                 <ButtonComponent 

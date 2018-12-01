@@ -50,13 +50,19 @@
     width: 18px;
     height: 18px;
 }
+.date-output {
+    vertical-align: inherit;
+}
+.date-output.completed {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
 
 @media screen and (max-width:479px) {
     .date-output {
         display: none;
     }
     .time-left {
-        /* font-size: 1.2rem; */
         letter-spacing: 0.5px;
     }
 }

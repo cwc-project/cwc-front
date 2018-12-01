@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import { editProjectTitle } from '../actions';
-
 import Heading from 'components/Heading';
 
 class HeadingContainer extends PureComponent {
@@ -13,8 +12,14 @@ class HeadingContainer extends PureComponent {
             modal: false,
         };  
         this.input = undefined;
+        this.project = this.pickProject();
     };
 
+    pickProject = () => {
+        const { match, projects } = this.props;
+        // const idx = match.params.projectId - 1;
+        return projects[0];    
+    }
 
     getInput = (elem) => {
         this.input = elem;
@@ -38,16 +43,18 @@ class HeadingContainer extends PureComponent {
 
     render() {
         const { modal } = this.state;
-        const { project: {title} } = this.props;
-
+        // const { project: {title} } = this.props;
+        const project = this.pickProject()
+        console.log(this.props.match)
         return (
-            <Heading 
-                title={title}
-                modal={modal}
-                onToggle={this.toggle}
-                onSubmit={this.handleSubmit}   
-                getInput={this.getInput}         
-            />
+            <div>Heading</div>
+            // <Heading 
+            //     title={title}
+            //     modal={modal}
+            //     onToggle={this.toggle}
+            //     onSubmit={this.handleSubmit}   
+            //     getInput={this.getInput}         
+            // />
         );
     };   
 };

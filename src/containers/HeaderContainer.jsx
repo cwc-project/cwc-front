@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { getUser } from '../actions';
 import Header from 'components/Header';
@@ -21,7 +22,7 @@ class HeaderContainer extends PureComponent {
     handleLog = () => {
         const { history, onGetUser } = this.props;
         onGetUser()
-        .then(() => {    
+        .then(() => {     
             if(this.props.user.id)
                 history.push('/projects');
         }); 
@@ -55,4 +56,4 @@ function mapDispatchToProps(dispatch) {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

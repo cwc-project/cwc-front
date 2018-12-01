@@ -15,25 +15,32 @@ class ProjectsContainer extends PureComponent {
 
     componentDidMount() {
         const { user_id, onGetProjects } = this.props;        
-        onGetProjects(user_id);
+        onGetProjects(user_id)
+        .then(() => this.props.projects && this.handleLocation());        
     };
 
     handleChange = event => {
         this.setState({value: event.target.value});
-    }
+    };
 
-    selectProject = event => {   
-        // console.log(event.target.elements.select.value) //можно реализовать через submit 
+    handleLocation () {
         const { history, projects } = this.props;
         const { value } = this.state;
         const projectIdx = projects && !value ? 1 : value;
         history.push(`/projects/${projectIdx}`);
+    };
+
+    selectProject = event => {   
+        // console.log(event.target.elements.select.value) //можно реализовать через submit 
+        this.handleLocation();
         event.preventDefault();
-    }
+    };
 
     render() {
         const { projects} = this.props;
+        // const projects = undefined;
         const { value } = this.state;
+
         return(
             <Projects 
                 projects={projects}

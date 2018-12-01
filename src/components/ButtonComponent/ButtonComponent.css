@@ -34,8 +34,8 @@
     font-style: italic;
     color: #8b8b8b;
 }
-.btn-light.timer-btn:hover,
-.btn-light:hover .date-output,
+.btn-light:not(:disabled):not(.disabled).timer-btn:hover,
+.btn-light:not(:disabled):not(.disabled):hover .date-output,
 .btn-light:not(:disabled):not(.disabled):active.timer-btn {
     text-shadow: 2px 2px 3px rgba(0, 123, 255, 0.25);
     background: transparent;
@@ -53,8 +53,9 @@
 .choose-project-btn {
     padding: 0.3rem 0.75rem;
     border: 1px solid #ced4da;
+    background: #fff;
 }
-/* .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus */
+/* .btn-outline-primary */
 
 /* адаптивность */
 @media screen and (max-width:479px) {

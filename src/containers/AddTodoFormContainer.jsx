@@ -9,23 +9,21 @@ class AddTodoFormContainer extends PureComponent {
         super(props);
         this.state = {
             title: '',
-        }
-    }
+        };
+    };
 
-    handleAddTodo = (event) => {
-        event.preventDefault();
+    handleAddTodo = (event) => {        
         const title = this.state.title;
 
         if(title) {
-            const { onAddTodo, project_id } = this.props;
-            onAddTodo(title, project_id);
+            const { onAddTodo, project:{ id: project_id }, user_id } = this.props;
+            onAddTodo(title, project_id, user_id);
             this.setState({ title: '', });
         };
-    }
+        event.preventDefault();
+    };
 
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value, });
-    }
+    handleChange = event => this.setState({ [event.target.name]: event.target.value, });
 
     render() {
         const { title } = this.state;
@@ -37,18 +35,18 @@ class AddTodoFormContainer extends PureComponent {
                 onAddTodo={this.handleAddTodo}            
             />
         );
-    }
+    };
 };
 
-function mapStateToProps(store) {
+function mapStateToProps(state) {
     return {
-        project_id: store.project.id,
+        user_id: state.user.id,
     };
 };
 
 function mapDispatchToProps(dispatch) {
     return {
-        onAddTodo: (title, project_id) => dispatch(addTodo(title, project_id)), 
+        onAddTodo: (title, project_id, user_id) => dispatch(addTodo(title, project_id, user_id)), 
     };
 };
 
