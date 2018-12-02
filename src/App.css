@@ -1,4 +1,7 @@
-
+.container.wrapper {
+    max-width: 650px;
+    margin: auto;
+}
 /* reactstrap */
 .card-body {
     border-top-left-radius: 0.25rem;

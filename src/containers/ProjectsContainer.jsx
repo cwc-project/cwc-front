@@ -10,43 +10,44 @@ class ProjectsContainer extends PureComponent {
         super(props);
         this.state = {
             value: '',
+            editing: false,
         };
     };
 
     componentDidMount() {
         const { user_id, onGetProjects } = this.props;        
         onGetProjects(user_id)
-        .then(() => this.props.projects && this.handleLocation());        
+        // .then(() => this.props.projects && this.handleLocation());        
     };
 
-    handleChange = event => {
-        this.setState({value: event.target.value});
-    };
+    // handleChange = event => {
+    //     this.setState({value: event.target.value});
+    // };
 
-    handleLocation () {
-        const { history, projects } = this.props;
-        const { value } = this.state;
-        const projectIdx = projects && !value ? 1 : value;
-        history.push(`/projects/${projectIdx}`);
-    };
+    // handleLocation () {
+    //     const { history, projects } = this.props;
+    //     const { value } = this.state;
+    //     const projectIdx = projects && !value ? 1 : value;
+    //     history.push(`/projects/${projectIdx}`);
+    // };
 
-    selectProject = event => {   
-        // console.log(event.target.elements.select.value) //можно реализовать через submit 
-        this.handleLocation();
-        event.preventDefault();
-    };
+    // selectProject = event => {   
+    //     // console.log(event.target.elements.select.value) //можно реализовать через submit 
+    //     this.handleLocation();
+    //     event.preventDefault();
+    // };
 
     render() {
         const { projects} = this.props;
         // const projects = undefined;
-        const { value } = this.state;
+        // const { value } = this.state;
 
         return(
             <Projects 
                 projects={projects}
-                value={value}
-                onChange={this.handleChange}
-                onSelect={this.selectProject}
+                // value={value}
+                // onChange={this.handleChange}
+                // onSelect={this.selectProject}
             />
         );
     };

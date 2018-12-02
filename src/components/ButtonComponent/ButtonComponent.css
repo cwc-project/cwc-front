@@ -35,12 +35,15 @@
     color: #8b8b8b;
 }
 .btn-light:not(:disabled):not(.disabled).timer-btn:hover,
-.btn-light:not(:disabled):not(.disabled):hover .date-output,
+.btn-light:not(:disabled):not(.disabled).date-output:hover,
+.btn-light:not(:disabled):not(.disabled).project-more-btn:hover ,
+.btn-light:not(:disabled):not(.disabled).project-more-btn:focus ,
 .btn-light:not(:disabled):not(.disabled):active.timer-btn {
     text-shadow: 2px 2px 3px rgba(0, 123, 255, 0.25);
     background: transparent;
     border-color: transparent;  
     box-shadow: none;
+    outline: none;
 }
 
 .timer-set-btn {
@@ -54,8 +57,27 @@
     padding: 0.3rem 0.75rem;
     border: 1px solid #ced4da;
     background: #fff;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
-/* .btn-outline-primary */
+
+.first-project-btn {
+    font-size: 1.1rem;
+}
+.first-project-btn svg {
+    margin-bottom: 0.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.project-more-btn {
+    color: #6c757d;
+    background: transparent;
+    background: transparent;
+    border-color: transparent;  
+    box-shadow: none;
+}
+
+
 
 /* адаптивность */
 @media screen and (max-width:479px) {

@@ -21,6 +21,7 @@ class HeaderContainer extends PureComponent {
 
     handleLog = () => {
         const { history, onGetUser } = this.props;
+        console.log(history)
         onGetUser()
         .then(() => {     
             if(this.props.user.id)

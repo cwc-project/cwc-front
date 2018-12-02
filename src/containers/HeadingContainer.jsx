@@ -12,14 +12,7 @@ class HeadingContainer extends PureComponent {
             modal: false,
         };  
         this.input = undefined;
-        this.project = this.pickProject();
     };
-
-    pickProject = () => {
-        const { match, projects } = this.props;
-        // const idx = match.params.projectId - 1;
-        return projects[0];    
-    }
 
     getInput = (elem) => {
         this.input = elem;
@@ -43,18 +36,15 @@ class HeadingContainer extends PureComponent {
 
     render() {
         const { modal } = this.state;
-        // const { project: {title} } = this.props;
-        const project = this.pickProject()
-        console.log(this.props.match)
+
         return (
-            <div>Heading</div>
-            // <Heading 
-            //     title={title}
-            //     modal={modal}
-            //     onToggle={this.toggle}
-            //     onSubmit={this.handleSubmit}   
-            //     getInput={this.getInput}         
-            // />
+            <Heading 
+                title={title}
+                modal={modal}
+                onToggle={this.toggle}
+                onSubmit={this.handleSubmit}   
+                getInput={this.getInput}         
+            />
         );
     };   
 };

@@ -18,6 +18,7 @@
 .todo-title.list-group-item-heading{
     margin-bottom: 0;
     word-break: break-word;
+    text-align: left;
 }
 
 .todo-left-side {

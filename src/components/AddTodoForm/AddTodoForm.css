@@ -7,6 +7,7 @@
     box-shadow: 0 0px 9px rgba(0, 0, 0, 0.2);
     position: sticky;
     bottom: 0;
+    z-index: 1;
 }
 
 .todo-add-form {    

@@ -17,7 +17,7 @@ export default function Header(props) {
                 >
                     {user.email ?               
                         <Dropdown className="user-name" isOpen={dropdownOpen} toggle={onToggle}>
-                            <DropdownToggle tag="a">
+                            <DropdownToggle tag="a" caret>
                                 {user.email}
                             </DropdownToggle>
                             <DropdownMenu right>
