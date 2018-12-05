@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
+import { withRouter } from 'react-router-dom';
 
 import ProjectsSelect from 'components/ProjectsSelect';
 
@@ -19,7 +19,7 @@ class ProjectsSelectContainer extends PureComponent {
         const { value } = this.state;
         const projectIdx = projects && !value ? 1 : value;
         if(value <= projects.length)
-            this.props.push(`/projects/${projectIdx}`);
+            this.props.history.push(`/projects/${projectIdx}`);
     };
 
     selectProject = event => {   
@@ -48,4 +48,4 @@ function mapStateToProps(state) {
     };
 };
 
-export default connect(mapStateToProps, { push })(ProjectsSelectContainer);
+export default withRouter(connect(mapStateToProps)(ProjectsSelectContainer));

@@ -25,42 +25,42 @@ export function addTodo(title, project_id, user_id) {
     };
 };
 
-export function checkTodo(id, completed, deadline) {
+export function checkTodo(todo_id, completed, deadline, user_id) {
     return {        
         type: CHECK_TODO,
         request: {            
             method: 'put',
-            url: `/tasks/${id}/?completed=${completed}&deadline=${deadline}`,
+            url: `/tasks/${todo_id}/?completed=${completed}&deadline=${deadline}&user_id=${user_id}}`,
         },
     };
 };
 
-export function deleteTodo(id) { 
+export function deleteTodo(todo_id, user_id) { 
     return {
         type: DELETE_TODO,
         request: {
             method: 'delete',
-            url: `/tasks/${id}`,  
+            url: `/tasks/${todo_id}/?user_id=${user_id}`,  
         },
     };
 };
 
-export function editTodoTitle(id, title) { 
+export function editTodoTitle(todo_id, title, user_id) { 
     return {
         type: EDIT_TODO_TITLE,
         request: {
             method: 'put',
-            url: `/tasks/${id}/?title=${title}`,
+            url: `/tasks/${todo_id}/?title=${title}&user_id=${user_id}`,
         },
     };
 };
 
-export function setTodoDeadline(id, deadline) {
+export function setTodoDeadline(todo_id, deadline, user_id) {
     return {
         type: SET_TODO_DEADLINE,
         request: {
             method: 'put',
-            url: `/tasks/${id}/?deadline=${deadline}`,
+            url: `/tasks/${todo_id}/?deadline=${deadline}&user_id=${user_id}`,
         },
     };
 };

@@ -8,30 +8,33 @@ import TodoList from 'components/TodoList';
 
 class TodoListContainer extends PureComponent {
     constructor(props) {
-        super(props);
+        super(props);      
     };
 
     componentDidMount() {
-        this.getTodo();
+        this.getTodos();       
     };
 
-    componentDidUpdate(prevProps) {       
+      componentDidUpdate(prevProps) {   
+
         const { match: { params: { projectId } } } = this.props;
         const prevProjectId = prevProps.match.params.projectId;
-        if (prevProjectId !== projectId) 
-            this.getTodo();              
+        if (prevProjectId !== projectId)             
+             this.getTodos();   
     };
 
-    getTodo = () => {
+    getTodos = () => {
         const { project: {id}, onGetTodos } = this.props;
-        onGetTodos(id);
+        // this.state.todos = this.props.todos
+        onGetTodos(id);    
     }
-    
+        
     render() {
-        const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
+        const { user_id, todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
 
         return(
             <TodoList 
+                user_id={user_id}
                 todos={todos}
                 loading={loading}  
                 onDelete={onDelete}  
@@ -44,6 +47,7 @@ class TodoListContainer extends PureComponent {
 
 function mapStateToProps(state) {
     return {
+        user_id: state.user.id,
         todos: state.todos,
         loading: state.loading.todos,
     };
@@ -52,9 +56,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onGetTodos: project_id => dispatch(getTodos(project_id)),
-        onDelete: id => dispatch(deleteTodo(id)),
-        onCheck: (id, complete, deadline) => dispatch(checkTodo(id, complete, deadline)),
-        onTodoTitleEdit: (id, title) => dispatch(editTodoTitle(id, title)),
+        onDelete: (todo_id, user_id) => dispatch(deleteTodo(todo_id, user_id)),
+        onCheck: (todo_id, completed, deadline, user_id) => dispatch(checkTodo(todo_id, completed, deadline, user_id)),
+        onTodoTitleEdit: (todo_id, title, user_id) => dispatch(editTodoTitle(todo_id, title, user_id)),
     };
 };
 

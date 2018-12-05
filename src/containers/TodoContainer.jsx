@@ -73,34 +73,34 @@ export default class TodoContainer extends PureComponent {
     };
     
     handleCheck = () => {
-        const { id, onCheck} = this.props;   
+        const { user_id, id: todo_id, onCheck } = this.props;           
         const completed = !this.props.completed;
         const now = new Date();
         const deadline = completed ? now.toISOString() : null;
         completed ? clearInterval(this.interval) : this.tick();        
-        onCheck(id, completed, deadline);
+        onCheck(todo_id, completed, deadline, user_id);
     };
 
     handleEdit = () => {        
-        this.setState({ editing: true, })
+        this.setState({ editing: true, });
     };
 
-    handleDelete = (event) => {
+    handleDelete = event => {        
+        const { user_id, id: todo_id, onDelete} = this.props;
+        onDelete(todo_id, user_id);
         event.preventDefault();
-        const { id, onDelete} = this.props;
-        onDelete(id);
     };  
 
-    handleSave = (event) => {
-        event.preventDefault();    
-        const { id, onTodoTitleEdit } = this.props;
+    handleSave = event => {           
+        const { user_id, id: todo_id, onTodoTitleEdit } = this.props;
         const { title } = this.state;
-        onTodoTitleEdit(id, title);
-        this.setState({ editing: false, });      
+        onTodoTitleEdit(todo_id, title, user_id);
+        this.setState({ editing: false, });   
+        event.preventDefault();    
     };
 
     renderDisplayTodo() {
-        const { id, title, completed, deadline } = this.props;
+        const { user_id, id, title, completed, deadline } = this.props;
         const { timeElapsed } = this.state;
         const outputDate = this.outputDateFormat(deadline);
 
@@ -109,7 +109,8 @@ export default class TodoContainer extends PureComponent {
                 id={id}
                 title={title}
                 completed={completed}
-                deadline={deadline}       
+                deadline={deadline}   
+                user_id={user_id}    
                 timeElapsed={timeElapsed}
                 outputDate={outputDate}
                 onCheck={this.handleCheck}

@@ -35,13 +35,12 @@ class TimerContainer extends PureComponent {
     toggleSplit = () => this.setState({ splitButtonOpen: !this.state.splitButtonOpen, });
 
     timerEdit = deadline => {
-        const { id, project_id, onSetTodoDeadline } = this.props;
-        onSetTodoDeadline(id, deadline, project_id);
+        const { user_id, id: todo_id,  onSetTodoDeadline } = this.props;
+        onSetTodoDeadline(todo_id, deadline, user_id);
         this.toggle();
     };
 
-     deadlineSet = async event => {
-        event.preventDefault();
+     deadlineSet = async event => {        
         await this.dateValidation(); 
         await this.timeValidation(); 
         const { date, time, dateInvalid, timeInvalid } = this.state;       
@@ -49,7 +48,8 @@ class TimerContainer extends PureComponent {
             const deadlineLocal = new Date(`${date} ${time}`);       
             const deadline = deadlineLocal.toISOString();   
             this.timerEdit(deadline);    
-        }; 
+        };
+        event.preventDefault(); 
     };  
 
     handleChange = event => {         
@@ -231,7 +231,7 @@ class TimerContainer extends PureComponent {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onSetTodoDeadline: (id, deadline, project_id) => dispatch(setTodoDeadline(id, deadline, project_id)),
+        onSetTodoDeadline: (todo_id, deadline, project_id) => dispatch(setTodoDeadline(todo_id, deadline, project_id)),
     };
 };
 

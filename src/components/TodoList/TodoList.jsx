@@ -7,7 +7,7 @@ import { ListGroup, } from 'reactstrap';
 import TodoContainer from 'containers/TodoContainer';
 
 export default function TodoList(props) {
-    const { todos, loading, onDelete, onCheck, onTodoTitleEdit } = props;
+    const { user_id, todos, loading, onDelete, onCheck, onTodoTitleEdit } = props;
     
     return (          
         !loading ?       
@@ -20,6 +20,7 @@ export default function TodoList(props) {
                     >
                         <TodoContainer 
                             key={todo.id} 
+                            user_id={user_id}
                             {...todo}
                             onDelete={onDelete}
                             onCheck={onCheck}

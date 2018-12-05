@@ -10,7 +10,7 @@ import ButtonComponent from 'components/ButtonComponent';
 
 export default function Todo(props) {  
     
-    const { id, title, completed, deadline, project_id, timeElapsed, outputDate, onCheck, onEdit } = props;
+    const { user_id, id, title, completed, deadline, project_id, timeElapsed, outputDate, onCheck, onEdit } = props;
 
     const todoCheck = classNames( 'todo',
         completed ? 'completed' : 'uncompleted',
@@ -45,11 +45,12 @@ export default function Todo(props) {
                     </ListGroupItemHeading>                
                 </div>
                 <div className="todo-right-side">
-                    <Timer 
+                    <Timer                         
                         id={id}
                         completed={completed}
                         deadline={deadline} 
                         project_id={project_id} 
+                        user_id={user_id}
                         timeElapsed={timeElapsed} 
                         outputDate={outputDate}
                     />
