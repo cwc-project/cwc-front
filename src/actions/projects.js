@@ -13,12 +13,12 @@ export function getProjects(user_id) {
     };
 };
 
-export function editProjectTitle(project_id, title) { 
+export function editProjectTitle(project_id, title, user_id) { 
     return {        
         type: EDIT_PROJECT_TITLE,
         request: {
             method: 'put',
-            url: `/projects/${project_id}/?title=${title}`,
+            url: `/projects/${project_id}/?title=${title}&user_id=${user_id}`,
         },
     };
 };
@@ -33,12 +33,12 @@ export function addProject(title, user_id) {
     };
 };
 
-export function deleteProject(project_id) { 
+export function deleteProject(project_id, user_id) { 
     return {        
         type: DELETE_PROJECT,
         request: {
             method: 'delete',
-            url: `/projects/${project_id}`,
+            url: `/projects/${project_id}/?user_id=${user_id}`,
         },
     };
 };

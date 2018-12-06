@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { DragDropContext } from 'react-beautiful-dnd';
 
-import { getTodos, deleteTodo, checkTodo, editTodoTitle, } from '../actions';
+import { getTodos, deleteTodo, checkTodo, editTodoTitle, reorderTodos } from '../actions';
 
 import TodoList from 'components/TodoList';
 
@@ -15,8 +16,7 @@ class TodoListContainer extends PureComponent {
         this.getTodos();       
     };
 
-      componentDidUpdate(prevProps) {   
-
+    componentDidUpdate(prevProps) {
         const { match: { params: { projectId } } } = this.props;
         const prevProjectId = prevProps.match.params.projectId;
         if (prevProjectId !== projectId)             
@@ -25,22 +25,31 @@ class TodoListContainer extends PureComponent {
 
     getTodos = () => {
         const { project: {id}, onGetTodos } = this.props;
-        // this.state.todos = this.props.todos
         onGetTodos(id);    
+    }
+
+    onDragEnd = result => {
+        if (!result.destination) {
+          return;
+        }         
+        const { onReorderTodos } = this.props;
+        onReorderTodos( result.source.index, result.destination.index);
     }
         
     render() {
         const { user_id, todos, loading, onDelete, onCheck, onTodoTitleEdit } = this.props;
 
         return(
-            <TodoList 
-                user_id={user_id}
-                todos={todos}
-                loading={loading}  
-                onDelete={onDelete}  
-                onCheck={onCheck}
-                onTodoTitleEdit={onTodoTitleEdit}            
-            />     
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                <TodoList 
+                    user_id={user_id}
+                    todos={todos}
+                    loading={loading}  
+                    onDelete={onDelete}  
+                    onCheck={onCheck}
+                    onTodoTitleEdit={onTodoTitleEdit}            
+                />  
+            </DragDropContext>   
         );
     };
 };
@@ -59,6 +68,7 @@ function mapDispatchToProps(dispatch) {
         onDelete: (todo_id, user_id) => dispatch(deleteTodo(todo_id, user_id)),
         onCheck: (todo_id, completed, deadline, user_id) => dispatch(checkTodo(todo_id, completed, deadline, user_id)),
         onTodoTitleEdit: (todo_id, title, user_id) => dispatch(editTodoTitle(todo_id, title, user_id)),
+        onReorderTodos: (startIndex, endIndex) => dispatch(reorderTodos(startIndex, endIndex)),
     };
 };
 

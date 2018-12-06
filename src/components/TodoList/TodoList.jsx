@@ -2,6 +2,7 @@ import './TodoList.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { ListGroup, } from 'reactstrap';
 import TodoContainer from 'containers/TodoContainer';
@@ -10,25 +11,47 @@ export default function TodoList(props) {
     const { user_id, todos, loading, onDelete, onCheck, onTodoTitleEdit } = props;
     
     return (          
-        !loading ?       
-            <TransitionGroup component={ListGroup} className="todo-list">                
-                {todos.map((todo, idx) => 
-                    <CSSTransition
-                        key={idx}
-                        timeout={500}
-                        classNames="slide"
-                    >
-                        <TodoContainer 
-                            key={todo.id} 
-                            user_id={user_id}
-                            {...todo}
-                            onDelete={onDelete}
-                            onCheck={onCheck}
-                            onTodoTitleEdit={onTodoTitleEdit} 
-                        /> 
-                    </CSSTransition>                       
-                )}                 
-            </TransitionGroup>
+        !loading ?   
+            <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                    <div ref={provided.innerRef}>  
+                        <TransitionGroup 
+                            component={ListGroup} 
+                            className="todo-list" 
+                        >                
+                            {todos.map((todo, index) => 
+                                <CSSTransition
+                                    key={todo.id}
+                                    timeout={500}
+                                    classNames="slide"
+                                >
+                                    <Draggable key={todo.id} draggableId={todo.id} index={index}>
+                                        {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                            >                                            
+                                                <TodoContainer 
+                                                    key={todo.id} 
+                                                    index={index}
+                                                    user_id={user_id}
+                                                    {...todo}
+                                                    onDelete={onDelete}
+                                                    onCheck={onCheck}
+                                                    onTodoTitleEdit={onTodoTitleEdit} 
+                                                
+                                                />  
+                                            </div>                                    
+                                        )}
+                                    </Draggable>
+                                </CSSTransition>    
+                            )}           
+                        </TransitionGroup>
+                        {provided.placeholder}
+                    </div>
+                )}
+            </Droppable>  
         :
             <div style={{ textAlign: 'center', }}>...loading</div>
     );

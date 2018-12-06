@@ -1,4 +1,12 @@
-import { GET_TODOS, ADD_TODO, DELETE_TODO, CHECK_TODO, EDIT_TODO_TITLE, SET_TODO_DEADLINE } from '../actions';
+import { 
+    GET_TODOS, 
+    REORDER_TODOS,
+    ADD_TODO, 
+    DELETE_TODO, 
+    CHECK_TODO, 
+    EDIT_TODO_TITLE, 
+    SET_TODO_DEADLINE,
+ } from '../actions';
 
 function todoReducer(state = {}, action) {
     switch (action.type) {
@@ -45,6 +53,12 @@ export default function reducer(state=[], action) {
 
         case SET_TODO_DEADLINE:    
             return state.map(todo => todoReducer(todo, action));
+        
+        case REORDER_TODOS: 
+            const result = Array.from(state);
+            const [removed] = result.splice(action.startIndex, 1);   
+            result.splice(action.endIndex, 0, removed);        
+            return result;
 
         default:
             return state;

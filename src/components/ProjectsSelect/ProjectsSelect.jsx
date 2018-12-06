@@ -7,7 +7,7 @@ import { Form, Input, Badge } from 'reactstrap';
 import ButtonComponent from 'components/ButtonComponent';
 
 export default function ProjectsSelect(props) {
-    const { projects, value, onChange, onSelect } = props;
+    const { projectId, projects, value, onChange, onSelect } = props;
 
     return(
         <Form className="d-flex"> 
@@ -17,7 +17,7 @@ export default function ProjectsSelect(props) {
             <Input 
                 className="rounded-0"
                 type="select"   
-                value={value}
+                value={value || projectId}
                 name="select"
                 onChange={onChange}
             >

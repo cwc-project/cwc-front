@@ -27,7 +27,10 @@ export default function Todo(props) {
     };
 
     return (
-        <ListGroupItem className={todoCheck}>
+        <ListGroupItem 
+            className={todoCheck} 
+            tag='div'
+        >
             <div className={outputMobile}>{outputDate}</div>
             <div className="todo-wrapper">
                 <div className="todo-left-side">

@@ -28,13 +28,14 @@ class ProjectsSelectContainer extends PureComponent {
     };
 
     render() {
-        const { projects } = this.props;
+        const { projects, match: { params: { projectId } } } = this.props;
         const { value } = this.state;
 
         return(
             <ProjectsSelect 
                 projects={projects}
                 value={value}
+                projectId={projectId}
                 onChange={this.handleChange}
                 onSelect={this.selectProject}
             />

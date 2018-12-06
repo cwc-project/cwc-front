@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import Project from 'components/Project';
+import { withRouter } from 'react-router-dom';
 
 import { addProject, deleteProject, editProjectTitle } from '../actions';
+import Project from 'components/Project';
 
 class ProjectContainer extends PureComponent {
     constructor(props) {
@@ -31,25 +32,29 @@ class ProjectContainer extends PureComponent {
 
     getProjectId() { return this.pickProject().id; };
 
-    addProject = () => {   
-        const { user_id, onAddProject } = this.props;
+    addProject = async () => {   
+        const { user_id, projects, onAddProject } = this.props;
         const { title } = this.state;
-        onAddProject(title, user_id);
+        await onAddProject(title, user_id);
         this.modalToggle();
+        const projectIdx = projects.length + 1;
+        this.props.history.push(`/projects/${projectIdx}`);
     };
 
     deleteProject = () => {
-        const { onDeleteProject } = this.props;
+        const { user_id, onDeleteProject } = this.props;
         const project_id = this.pickProject().id;
-        onDeleteProject(project_id);
+        this.dropdownToggle();
+        const projectIdx = this.props.projects.length > 1 ? this.props.projects.length - 1 : '';
+        this.props.history.push(`/projects/${projectIdx}`);
+        onDeleteProject(project_id, user_id);
     };
 
     editProjectTitle = () => {
-        debugger
-        const { onEditProjectTitle } = this.props;
+        const { user_id, onEditProjectTitle } = this.props;
         const project_id = this.getProjectId();
         const { title } = this.state;
-        onEditProjectTitle(project_id, title);     
+        onEditProjectTitle(project_id, title, user_id);     
         this.setState({title: ''});   
         this.modalEditToggle();
     };
@@ -83,9 +88,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onAddProject: (title, user_id) => dispatch(addProject(title, user_id)),
-        onDeleteProject: project_id => dispatch(deleteProject(project_id)),
-        onEditProjectTitle: (project_id, title) => dispatch(editProjectTitle(project_id, title)),
+        onDeleteProject: (project_id, user_id) => dispatch(deleteProject(project_id, user_id)),
+        onEditProjectTitle: (project_id, title, user_id) => dispatch(editProjectTitle(project_id, title, user_id)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProjectContainer));

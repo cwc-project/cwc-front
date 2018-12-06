@@ -1,4 +1,5 @@
 export const GET_TODOS = 'GET_TODOS';
+export const REORDER_TODOS = 'REORDER_TODOS';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const CHECK_TODO = 'CHECK_TODO';
@@ -12,6 +13,14 @@ export function getTodos(project_id) {
             method: 'get',
             url: `/tasks/?project_id=${project_id}`,
         },
+    };
+};
+
+export function reorderTodos(startIndex, endIndex) {
+    return {
+        type: REORDER_TODOS,
+        startIndex,
+        endIndex,
     };
 };
 
