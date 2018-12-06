@@ -35,12 +35,13 @@ class ProjectsContainer extends PureComponent {
 
     render() {
         const { modal, title } = this.state;
-        const { projects } = this.props;
+        const { projects, loading } = this.props;
         return(
             <Projects 
                 modal={modal}
                 title={title}
                 projects={projects}
+                loading={loading}
                 onModalToggle={this.modalToggle}
                 onChange={this.handleChange}
                 onAddProject={this.addProject}
@@ -53,6 +54,7 @@ function mapStateToProps(state) {
     return {
         user_id: state.user.id,
         projects: state.projects,
+        loading: state.loading.projects,
     };
 };
 

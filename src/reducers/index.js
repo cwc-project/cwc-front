@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-// import { connectRouter } from 'connected-react-router';
 
 import user from 'reducers/user';
 import projects from 'reducers/projects';
@@ -14,11 +13,3 @@ const reducer = combineReducers({
 });
 
 export default reducer;
-
-// export default (history) => combineReducers({
-//     router: connectRouter(history),
-//     user,
-//     projects,
-//     todos,
-//     loading,
-//   })
