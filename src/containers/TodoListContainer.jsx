@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { getTodos, deleteTodo, checkTodo, editTodoTitle, reorderTodos } from '../actions';
+import { 
+    getTodos, 
+    deleteTodo, 
+    checkTodo, 
+    editTodoTitle, 
+    reorderTodos,
+    serverTodosReorder, 
+} from '../actions';
 
 import TodoList from 'components/TodoList';
 
@@ -29,11 +36,15 @@ class TodoListContainer extends PureComponent {
     }
 
     onDragEnd = result => {
-        if (!result.destination) {
+        if (!result.destination || result.source.index === result.destination.index) {
           return;
-        }         
-        const { onReorderTodos } = this.props;
-        onReorderTodos( result.source.index, result.destination.index);
+        }  
+
+        const { todos, onReorderTodos, onServerTodosReorder } = this.props;
+        const nposb = todos[result.source.index].npos;
+        const npose = todos[result.destination.index].npos;
+        onReorderTodos(result.source.index, result.destination.index);
+        onServerTodosReorder(nposb, npose);
     }
         
     render() {
@@ -69,6 +80,7 @@ function mapDispatchToProps(dispatch) {
         onCheck: (todo_id, completed, deadline, user_id) => dispatch(checkTodo(todo_id, completed, deadline, user_id)),
         onTodoTitleEdit: (todo_id, title, user_id) => dispatch(editTodoTitle(todo_id, title, user_id)),
         onReorderTodos: (startIndex, endIndex) => dispatch(reorderTodos(startIndex, endIndex)),
+        onServerTodosReorder: (nposb, npose) => dispatch(serverTodosReorder(nposb, npose)),
     };
 };
 

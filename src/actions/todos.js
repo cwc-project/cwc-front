@@ -1,5 +1,6 @@
 export const GET_TODOS = 'GET_TODOS';
-export const REORDER_TODOS = 'REORDER_TODOS';
+export const LOCAL_REORDER_TODOS = 'LOCAL_REORDER_TODOS';
+export const SERVER_TODOS_REORDER = 'SERVER_TODOS_REORDER';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const CHECK_TODO = 'CHECK_TODO';
@@ -18,9 +19,19 @@ export function getTodos(project_id) {
 
 export function reorderTodos(startIndex, endIndex) {
     return {
-        type: REORDER_TODOS,
+        type: LOCAL_REORDER_TODOS,
         startIndex,
         endIndex,
+    };
+};
+
+export function serverTodosReorder(nposb, npose) {
+    return {
+        type: SERVER_TODOS_REORDER,
+        request: {
+            method: 'put',
+            url: `/tasks/change_npos/?nposb=${nposb}&npose=${npose}`,
+        },
     };
 };
 

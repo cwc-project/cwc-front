@@ -10,12 +10,14 @@ import GreetingContainer from 'containers/GreetingContainer';
 import ProjectsContainer from 'containers/ProjectsContainer';
 import ProjectContainer from 'containers/ProjectContainer';
 import PageNotFound from 'components/PageNotFound';
+import RegEnterModalFormContainer from 'containers/RegEnterModalFormContainer';
 
 export default function App() {
 
     return (
         <Fragment>            
             <Header />
+            <RegEnterModalFormContainer />
             <Container className="wrapper text-center" >
                 <Switch>
                     <Route exact path='/' component={GreetingContainer} />

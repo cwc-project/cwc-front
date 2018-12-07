@@ -101,29 +101,22 @@ export default class TodoContainer extends PureComponent {
     };
 
     renderDisplayTodo() {
-        const { index, user_id, id, title, completed, deadline } = this.props;
+        const { user_id, id, title, completed, deadline } = this.props;
         const { timeElapsed } = this.state;
         const outputDate = this.outputDateFormat(deadline);
 
         return (
-            // <Draggable key={id} draggableId={id} index={index}>
-            //     {(provided, snapshot) => (
-                    <Todo 
-                        id={id}
-                        title={title}
-                        completed={completed}
-                        deadline={deadline}   
-                        user_id={user_id}    
-                        timeElapsed={timeElapsed}
-                        outputDate={outputDate}
-                        onCheck={this.handleCheck}
-                        onEdit={this.handleEdit}
-                        // ref={provided.innerRef}
-                        // {...provided.draggableProps}
-                        // {...provided.dragHandleProps}
-                    />
-            //     )}
-            // </Draggable>
+            <Todo 
+                id={id}
+                title={title}
+                completed={completed}
+                deadline={deadline}   
+                user_id={user_id}    
+                timeElapsed={timeElapsed}
+                outputDate={outputDate}
+                onCheck={this.handleCheck}
+                onEdit={this.handleEdit}
+            />
         );
     }
 

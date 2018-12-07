@@ -40,7 +40,8 @@ class TimerContainer extends PureComponent {
         this.toggle();
     };
 
-     deadlineSet = async event => {        
+     deadlineSet = async event => { 
+        event.preventDefault();        
         await this.dateValidation(); 
         await this.timeValidation(); 
         const { date, time, dateInvalid, timeInvalid } = this.state;       
@@ -48,8 +49,7 @@ class TimerContainer extends PureComponent {
             const deadlineLocal = new Date(`${date} ${time}`);       
             const deadline = deadlineLocal.toISOString();   
             this.timerEdit(deadline);    
-        };
-        event.preventDefault(); 
+        };        
     };  
 
     handleChange = event => {         

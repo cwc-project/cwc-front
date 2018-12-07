@@ -15,14 +15,14 @@ export default function AddTodoForm(props) {
     
     return (
         <div className="todo-add-component">
-            <Form className="todo-add-form">
+            <Form className="todo-add-form" onSubmit={onAddTodo}>
                 <Input 
                     className="todo-add-input"                    
                     type="textarea" 
                     rows={1}
                     name="title"
                     value={title}  
-                    onChange={onChange}
+                    onChange={onChange}   
                     innerRef={elem => autoSize(elem)}
                     placeholder='New task' 
                     autoFocus

@@ -1,6 +1,6 @@
 import { 
     GET_TODOS, 
-    REORDER_TODOS,
+    LOCAL_REORDER_TODOS,
     ADD_TODO, 
     DELETE_TODO, 
     CHECK_TODO, 
@@ -54,7 +54,7 @@ export default function reducer(state=[], action) {
         case SET_TODO_DEADLINE:    
             return state.map(todo => todoReducer(todo, action));
         
-        case REORDER_TODOS: 
+        case LOCAL_REORDER_TODOS: 
             const result = Array.from(state);
             const [removed] = result.splice(action.startIndex, 1);   
             result.splice(action.endIndex, 0, removed);        
