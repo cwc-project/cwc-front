@@ -12,7 +12,7 @@ class AddTodoFormContainer extends PureComponent {
         };
     };
 
-    handleAddTodo = (event) => {        
+    handleAddTodo = event => {        
         const title = this.state.title;
 
         if(title) {
@@ -23,7 +23,15 @@ class AddTodoFormContainer extends PureComponent {
         event.preventDefault();
     };
 
-    handleChange = event => this.setState({ [event.target.name]: event.target.value, });
+    handleEnterClick = event => {
+        if(event.key === 'Enter' ) {
+            this.handleAddTodo(event);
+        };
+    };
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value, });
+    }
 
     render() {
         const { title } = this.state;
@@ -32,7 +40,8 @@ class AddTodoFormContainer extends PureComponent {
             <AddTodoForm 
                 title={title}
                 onChange={this.handleChange}
-                onAddTodo={this.handleAddTodo}            
+                onAddTodo={this.handleAddTodo} 
+                onEnterClick={this.handleEnterClick}           
             />
         );
     };
