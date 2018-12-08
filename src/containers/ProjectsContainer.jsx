@@ -23,6 +23,7 @@ class ProjectsContainer extends PureComponent {
 
     modalToggle = () => this.setState({ modal: !this.state.modal, });
 
+
     handleChange = event => this.setState({ [event.target.name]: event.target.value, });
 
     addProject = async () => {   

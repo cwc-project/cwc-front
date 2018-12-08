@@ -57,8 +57,6 @@
     padding: 0.3rem 0.75rem;
     border: 1px solid #ced4da;
     background: #fff;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
 }
 
 .first-project-btn {
@@ -74,10 +72,28 @@
     background: transparent;
     background: transparent;
     border-color: transparent;  
-    box-shadow: none;
+
 }
 
+.pass-appear-btn {
+    border: 1px solid #ced4da;
+    /* border-left: none; */
+}
 
+.pass-appear-btn:focus,
+.pass-appear-btn:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
+}
+.pass-appear-btn:hover {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.pass-appear-btn svg{
+    color:  #6c757d;
+    width: 15.5px;
+    height: 19px;
+}
 
 /* адаптивность */
 @media screen and (max-width:479px) {

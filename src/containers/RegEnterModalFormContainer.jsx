@@ -10,6 +10,7 @@ class RegEnterModalFormContainer extends PureComponent {
         this.state = {
             modal: false,
             activeTab: '1',
+            hidePass: true,
         };
     };
 
@@ -21,15 +22,20 @@ class RegEnterModalFormContainer extends PureComponent {
         };
     };
 
+    togglePass = event => {
+        this.setState({ hidePass: !this.state.hidePass, });
+        event.preventDefault();
+    };
+
     render() {
-        const { modal, activeTab } = this.state;
+        const { ...state } = this.state;
 
         return(
             <RegEnterModalForm 
-                modal={modal}
-                activeTab={activeTab}
+                state={state}
                 onToggleModal={this.toggleModal}
                 onToggleTab={this.toggleTab}
+                onTogglePass={this.togglePass}                
             />
         );
     };

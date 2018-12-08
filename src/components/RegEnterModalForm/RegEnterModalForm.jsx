@@ -1,7 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import { User, UserPlus} from 'react-feather';
+import { 
+    User, 
+    UserPlus, 
+    Eye, 
+    EyeOff, 
+} from 'react-feather';
 import { 
     Button, 
     Modal, 
@@ -13,16 +18,32 @@ import {
     Nav, 
     NavItem, 
     NavLink,
-
+    Form,
+    FormGroup,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    Label,
 } from 'reactstrap';
+import ButtonComponent from 'components/ButtonComponent';
+import RegEnterFormContainer from 'containers/RegEnterFormContainer';
 
 export default function RegEnterModalForm(props) {
-    const { modal, activeTab, onToggleModal, onToggleTab, } = props;
+    const { 
+        state: {
+            modal, 
+            activeTab, 
+            hidePass}, 
+        onToggleModal, 
+        onToggleTab, 
+        onTogglePass,
+    } = props;
 
     return (
         <div>
-            <Button color="danger" onClick={onToggleModal}>Open</Button>
-            <Modal isOpen={modal} toggle={onToggleModal} >
+            <Button color="danger" onClick={onToggleModal} >Open</Button>
+            <Modal isOpen={true} toggle={onToggleModal} >
+                <ModalHeader toggle={onToggleModal} />
                 <ModalBody>
                     <Nav tabs>
                         <NavItem>
@@ -44,7 +65,9 @@ export default function RegEnterModalForm(props) {
                     </Nav>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1">
-                            <h4>Tab 1 Contents</h4>
+                            <RegEnterFormContainer                                 
+                            
+                            />
                         </TabPane>
                         <TabPane tabId="2">
                             <h4>Tab 2 Contents</h4>
