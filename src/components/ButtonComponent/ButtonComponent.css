@@ -77,7 +77,8 @@
 
 .pass-appear-btn {
     border: 1px solid #ced4da;
-    /* border-left: none; */
+    margin-left: 1px;
+    border-left: none;
 }
 
 .pass-appear-btn:focus,
@@ -93,6 +94,7 @@
     color:  #6c757d;
     width: 15.5px;
     height: 19px;
+
 }
 
 /* адаптивность */

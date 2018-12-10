@@ -1,3 +1,4 @@
+import './RegEnterModal.css';
 import React from 'react';
 import classnames from 'classnames';
 
@@ -28,7 +29,7 @@ import {
 import ButtonComponent from 'components/ButtonComponent';
 import RegEnterFormContainer from 'containers/RegEnterFormContainer';
 
-export default function RegEnterModalForm(props) {
+export default function RegEnterModal(props) {
     const { 
         state: {
             modal, 
@@ -39,19 +40,30 @@ export default function RegEnterModalForm(props) {
         onTogglePass,
     } = props;
 
+    const emailText = 'Please state valid e-mail. It will be used for password restore.';
+    const emailFeedback = 'Incorrect email format. Example: example@email.com';
+    const passFeedback = 'Password length should be not less than 6 characters. Please use at least one letter and one number.';
+
     return (
         <div>
             <Button color="danger" onClick={onToggleModal} >Open</Button>
-            <Modal isOpen={true} toggle={onToggleModal} >
-                <ModalHeader toggle={onToggleModal} />
-                <ModalBody>
+            <Modal 
+                className='reg-modal'
+                isOpen={true} 
+                toggle={onToggleModal} 
+            >
+                <ModalHeader 
+                    className="border-bottom-0 pb-0"
+                    toggle={onToggleModal} 
+                />
+                <ModalBody className="pt-0">
                     <Nav tabs>
                         <NavItem>
                             <NavLink
                                 className={classnames({ active: activeTab === '1' })}
                                 onClick={() => { onToggleTab('1'); }}
                             >
-                                 Sign In <User />
+                                 Sign In <User className="pb-1 pl-1" />
                             </NavLink>
                         </NavItem>
                         <NavItem>
@@ -59,18 +71,24 @@ export default function RegEnterModalForm(props) {
                                 className={classnames({ active: activeTab === '2' })}
                                 onClick={() => { onToggleTab('2'); }}
                             >
-                                 Sign Up <UserPlus />
+                                 Sign Up <UserPlus className="pb-1 pl-1" />
                             </NavLink>
                         </NavItem>
                     </Nav>
                     <TabContent activeTab={activeTab}>
                         <TabPane tabId="1">
                             <RegEnterFormContainer                                 
-                            
+                                btnValue="Log in"
                             />
                         </TabPane>
                         <TabPane tabId="2">
-                            <h4>Tab 2 Contents</h4>
+                            <RegEnterFormContainer                                 
+                                btnValue="Register"
+                                passFeedback={true}
+                                emailText={emailText}
+                                emailFeedback={emailFeedback}
+                                passFeedback={passFeedback}
+                            />
                         </TabPane>
                     </TabContent>
                 </ModalBody>               
@@ -78,12 +96,3 @@ export default function RegEnterModalForm(props) {
         </div>
     );
 };
-
-{/* <ModalHeader toggle={onToggle}>Modal title</ModalHeader>
-                <ModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={onToggle}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={onToggle}>Cancel</Button>
-                </ModalFooter> */}

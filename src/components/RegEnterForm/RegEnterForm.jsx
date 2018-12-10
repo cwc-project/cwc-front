@@ -1,6 +1,7 @@
+import './RegEnterForm.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 import { 
     Eye, 
@@ -11,6 +12,7 @@ import {
     Form,
     FormGroup,
     FormText,
+    FormFeedback,
     Input,
     InputGroup,
     InputGroupAddon,
@@ -24,72 +26,88 @@ export default function RegEnterForm(props) {
             email,
             password,
             hidePass,
+            emailValid,
+            passValid,
         }, 
-        btnValue,
+        props: {
+            btnValue,
+            emailText,
+            passText,
+            emailFeedback,
+            passFeedback,
+        },       
         onTogglePass,
         onChange
     } = props;
 
+    const emailCheck = classNames(     
+        emailValid === undefined || !emailFeedback  ? '' : (emailValid ? 'is-valid' : 'is-invalid'),
+    );   
+    const passCheck = classNames(
+        passValid === undefined || !passFeedback ? '' : (passValid ? 'is-valid' : 'is-invalid'),
+    ); 
+
     return (
         <Form className="p-1">
-            <FormGroup>
+            <FormGroup className="mb-1">
                 <Label for="exampleEmail">E-mail*</Label>  
                 <InputGroup>                    
                     <Input 
+                        className={emailCheck}
                         type="email" 
                         name="email" 
                         value={email}
                         id="exampleEmail" 
                         onChange={onChange}
-                        placeholder="use for authentification" 
+                        // placeholder="use for authentification" 
                     />
-                    <InputGroupAddon addonType="append">@</InputGroupAddon>
+                    <InputGroupAddon className="at-addon-right" addonType="append">@</InputGroupAddon>
+                    {emailFeedback ? <FormFeedback>{emailFeedback}</FormFeedback> : false} 
                 </InputGroup> 
-                <FormText>Please state valid e-mail. It will be used for password restore.</FormText>                      
+                {emailText ? <FormText>{emailText}</FormText> : false}    
+               
             </FormGroup>
-            <FormGroup className="pb-2">
-                <Label for="password">Password*</Label>
+
+            <FormGroup>
+            <Label for="password">Password*</Label>
                 <InputGroup>
-                    <Input 
-                        className="border-right-0"
+                    <Input                         
+                        className={passCheck}
                         type={hidePass ? 'password' : 'text'} 
                         name="password" 
                         value={password}
                         id="password" 
-                        placeholder="six characters minimum" 
-                        onChange={onChange}
-                        // valid={hidePass}
-                        // invalid={hidePass}
-                        
+                        // placeholder="six characters minimum" 
+                        onChange={onChange}                        
                     />
                     <InputGroupAddon addonType="append">
                         <ButtonComponent
-                            className="pass-appear-btn"
+                            className="pass-appear-btn rounded-right"
                             icon={hidePass ? <EyeOff /> : <Eye />}
                             onClick={onTogglePass}
                         />
                     </InputGroupAddon>
+                    {passFeedback ? <FormFeedback>{passFeedback}</FormFeedback> : false}
                 </InputGroup>
-            </FormGroup>    
-                    
+                {passText ? <FormText>{passText}</FormText> : false}
+            </FormGroup>                     
             <Button className="float-right " color="primary" outline>{btnValue}</Button>
-
         </Form>
     );
 };
 
 RegEnterForm.propTypes = {
-    // email: PropTypes.string.isRequired,
-    // password: PropTypes.string.isRequired,
-    // onChange: PropTypes.func.isRequired,
-    // onSubmit: PropTypes.func.isRequired,
+    state: PropTypes.shape({
+        email: PropTypes.string.isRequired,
+        password: PropTypes.string.isRequired,
+        hidePass: PropTypes.bool,
+        emailValid: PropTypes.oneOf([true, false, undefined,]),
+        passValid: PropTypes.oneOf([true, false, undefined,]),
+      }),
+    onChange: PropTypes.func.isRequired,
     hidePass: PropTypes.bool,
-    btnValue: PropTypes.string,
-    // formText:  PropTypes.string,
 }
 
 RegEnterForm.defaultProps = {
     btnValue: 'submit',
 };
-
-//default props для значения кнопки

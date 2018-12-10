@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import RegEnterModalForm from 'components/RegEnterModalForm'
+import RegEnterModal from 'components/RegEnterModal';
 
-class RegEnterModalFormContainer extends PureComponent {
+class RegEnterModalContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,10 +29,10 @@ class RegEnterModalFormContainer extends PureComponent {
 
     render() {
         const { ...state } = this.state;
-
+ 
         return(
-            <RegEnterModalForm 
-                state={state}
+            <RegEnterModal 
+                state={state}       
                 onToggleModal={this.toggleModal}
                 onToggleTab={this.toggleTab}
                 onTogglePass={this.togglePass}                
@@ -41,4 +41,4 @@ class RegEnterModalFormContainer extends PureComponent {
     };
 };
 
-export default connect(null)(RegEnterModalFormContainer);
+export default RegEnterModalContainer;

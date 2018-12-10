@@ -1,0 +1,5 @@
+.input-group > .at-addon-right.input-group-append > span.input-group-text {
+    /* color: red */
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
