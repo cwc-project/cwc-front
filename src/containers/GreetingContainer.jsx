@@ -8,6 +8,20 @@ import Greeting from 'components/Greeting';
 class GreetingContainer extends PureComponent {
     constructor(props) {
         super(props);
+        this.state = {
+            modal: false,
+            defaultTab: '',
+        };
+    };
+
+    toggleModal = () => this.setState({ modal: !this.state.modal });
+
+    defTabToggle = tab => {
+        // debugger
+        // if (this.state.defaultTab !== tab) {
+          this.setState({ defaultTab: tab, }, () => this.toggleModal());
+        // };
+        
     };
 
     handleLog = () => {
@@ -20,8 +34,14 @@ class GreetingContainer extends PureComponent {
     };
 
     render() {
+        const { ...state } = this.state;
+        // console.log(this.state.defaultTab)
+
         return(
             <Greeting
+                state={state}       
+                onToggleModal={this.toggleModal}
+                onDefTabToggle={this.defTabToggle}
                 onLog = {this.handleLog}
             />
         );

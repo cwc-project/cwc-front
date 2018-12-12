@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import RegEnterModal from 'components/RegEnterModal';
 
@@ -10,7 +8,6 @@ class RegEnterModalContainer extends PureComponent {
         this.state = {
             modal: false,
             activeTab: '1',
-            hidePass: true,
         };
     };
 
@@ -22,10 +19,6 @@ class RegEnterModalContainer extends PureComponent {
         };
     };
 
-    togglePass = event => {
-        this.setState({ hidePass: !this.state.hidePass, });
-        event.preventDefault();
-    };
 
     render() {
         const { ...state } = this.state;

@@ -30,6 +30,7 @@ export default function RegEnterForm(props) {
             passValid,
         }, 
         props: {
+            id,
             btnValue,
             emailText,
             passText,
@@ -50,33 +51,32 @@ export default function RegEnterForm(props) {
     return (
         <Form className="p-1">
             <FormGroup className="mb-1">
-                <Label for="exampleEmail">E-mail*</Label>  
+                <Label for={`${id}Email`}>E-mail*</Label>  
                 <InputGroup>                    
                     <Input 
                         className={emailCheck}
                         type="email" 
                         name="email" 
                         value={email}
-                        id="exampleEmail" 
+                        id={`${id}Email`} 
                         onChange={onChange}
                         // placeholder="use for authentification" 
                     />
                     <InputGroupAddon className="at-addon-right" addonType="append">@</InputGroupAddon>
                     {emailFeedback ? <FormFeedback>{emailFeedback}</FormFeedback> : false} 
                 </InputGroup> 
-                {emailText ? <FormText>{emailText}</FormText> : false}    
-               
+                {emailText ? <FormText>{emailText}</FormText> : false}               
             </FormGroup>
 
             <FormGroup>
-            <Label for="password">Password*</Label>
+            <Label for={`${id}Password`}>Password*</Label>
                 <InputGroup>
                     <Input                         
                         className={passCheck}
                         type={hidePass ? 'password' : 'text'} 
                         name="password" 
                         value={password}
-                        id="password" 
+                        id={`${id}Password`}                          
                         // placeholder="six characters minimum" 
                         onChange={onChange}                        
                     />
@@ -97,7 +97,7 @@ export default function RegEnterForm(props) {
 };
 
 RegEnterForm.propTypes = {
-    state: PropTypes.shape({
+    state: PropTypes.shape({        
         email: PropTypes.string.isRequired,
         password: PropTypes.string.isRequired,
         hidePass: PropTypes.bool,
